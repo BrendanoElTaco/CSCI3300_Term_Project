@@ -25,9 +25,14 @@ public class Calculator extends JFrame implements ActionListener {
     private JButton logBaseEButton;
     private JButton secondaryFunctionButton;
     private JButton xPowerOf2Button;
-    private JButton oneOverXButton;
+    //private JButton oneOverXButton;
+    //private JButton absoluteValueButton;
+    private JButton secButton;
+    private JButton cscButton;
+    private JButton cotButton;
+    private JButton moduloButton;
     /*
-     * Need x^2, x^3, 1/x, |x|, exp (scientific notation), mod (modulo), sec, csc, cot, sec^-1, csc^-1, cot^-1
+     * Need exp (scientific notation)
      */
     private String currentInput = "";
     private double num1;
@@ -88,7 +93,12 @@ public class Calculator extends JFrame implements ActionListener {
         logBaseEButton = createButton("LN", font1);
         secondaryFunctionButton = createButton("2nd", font1);
         xPowerOf2Button = createButton("x^2", font1);
-        oneOverXButton = createButton("1/x", font1);
+        //oneOverXButton = createButton("1/x", font1);
+        //absoluteValueButton = createButton("|x|", font1);
+        secButton = createButton("sec", font1);
+        cscButton = createButton("csc", font1);
+        cotButton = createButton("cot", font1);
+        moduloButton = createButton("%", font1);
 
         // Create a panel to arrange buttons in a grid
         JPanel buttonPanel = new JPanel();
@@ -101,18 +111,22 @@ public class Calculator extends JFrame implements ActionListener {
         buttonPanel.add(eulerButton);
         buttonPanel.add(ceButton);
         buttonPanel.add(backspaceButton);
-        
-        buttonPanel.add(xPowerOf2Button);
-        buttonPanel.add(oneOverXButton);
-        
+                
         //row2
-        buttonPanel.add(sqrRootButton);
+        buttonPanel.add(xPowerOf2Button);
         buttonPanel.add(sinButton);
         buttonPanel.add(cosButton);
         buttonPanel.add(tanButton);
+        buttonPanel.add(moduloButton);
+     
+        //row3
+        buttonPanel.add(sqrRootButton);
+        buttonPanel.add(secButton);
+        buttonPanel.add(cscButton);
+        buttonPanel.add(cotButton);
         buttonPanel.add(operationButtons[3]);
         
-        //row3
+        //row4
         buttonPanel.add(powerOfButton);
         buttonPanel.add(numButtons[7]);
         buttonPanel.add(numButtons[8]);
@@ -401,6 +415,97 @@ public class Calculator extends JFrame implements ActionListener {
 				}
 			}
 			
+			//Handle the action for the xPowerOf2Button button
+			/*else if (source == oneOverXButton) {
+				double num = Double.parseDouble(currentInput);
+				double result = 0.0;
+				
+				result = 1 / num;
+				resultField.setText(String.valueOf(result));
+				currentInput = "";
+				newInput = true;
+			}
+			
+			//Handle the action for the absolute value button
+			else if (source == absoluteValueButton) {
+				double num = Double.parseDouble(currentInput);
+				double result = 0.0;
+				
+				result = Math.abs(num);
+				resultField.setText(String.valueOf(result));
+				currentInput = "";
+				newInput = true;
+			}*/
+			
+			//Handle the action for the secant function button
+			else if (source == secButton) {
+				double num = Double.parseDouble(currentInput);
+				double result = 0.0;
+				//Arc secant
+				if (isSecondaryMode) {
+					result = Math.acos(1.0 / num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				//Secant
+				} else {
+					result = 1 / Math.cos(Math.toRadians(num));
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				}
+			}
+			
+			//Handle the action for the cosecant function button
+			else if (source == cscButton) {
+				double num = Double.parseDouble(currentInput);
+				double result = 0.0;
+				
+				//Arc cosecant
+				if (isSecondaryMode) {
+					result = Math.asin(1.0 / num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				//cosecant
+				} else {
+					result = 1 / Math.sin(num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				}
+			}
+			
+			//Handle the action for the cotangent function button
+			else if (source == cotButton) {
+				double num = Double.parseDouble(currentInput);
+				double result = 0.0;
+				
+				//Arc cotangent
+				if (isSecondaryMode) {
+					result = Math.atan(1.0 / num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				//cotangent
+				} else {
+					result = 1 / Math.tan(num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				}
+			}
+			
+			// Handle the action for the modulo button
+			else if (source == moduloButton) {
+			    if (!currentInput.isEmpty()) {
+			        num1 = Double.parseDouble(currentInput);
+			        selectedOperation = "%"; // Set the selected operation to modulo
+			        currentInput = "";
+			        newInput = true;
+			    }
+			}
+			
 			//Handle the action for the secondary function button
 			else if (source == secondaryFunctionButton) {
 				//Toggle between secondary functions
@@ -413,6 +518,9 @@ public class Calculator extends JFrame implements ActionListener {
 					cosButton.setText("cos" + "\u207B" + "\u00B9" );
 					tanButton.setText("tan" + "\u207B" + "\u00B9" );
 					xPowerOf2Button.setText("x^3");
+					secButton.setText("sec" + "\u207B" + "\u00B9" );
+					cscButton.setText("csc" + "\u207B" + "\u00B9" );
+					cotButton.setText("cot" + "\u207B" + "\u00B9" );
 				} else {
 					sqrRootButton.setText("√x");
 					powerOfButton.setText("xⁿ");
@@ -421,6 +529,9 @@ public class Calculator extends JFrame implements ActionListener {
 					cosButton.setText("cos");
 					tanButton.setText("tan");
 					xPowerOf2Button.setText("x^2");
+					secButton.setText("sec");
+					cscButton.setText("csc");
+					cotButton.setText("cot");
 				}
 			}
 		}		
@@ -449,6 +560,8 @@ public class Calculator extends JFrame implements ActionListener {
 			return Math.pow(num1, num2);
 		case "y√x":
 			return Math.pow(num1, 1.0 / num2);
+		case "%":
+			return num1 % num2;
 		default:
 			JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
 			return 0.0;
