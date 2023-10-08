@@ -24,7 +24,11 @@ public class Calculator extends JFrame implements ActionListener {
     private JButton logBaseTenButton;
     private JButton logBaseEButton;
     private JButton secondaryFunctionButton;
-    
+    private JButton xPowerOf2Button;
+    private JButton oneOverXButton;
+    /*
+     * Need x^2, x^3, 1/x, |x|, exp (scientific notation), mod (modulo), sec, csc, cot, sec^-1, csc^-1, cot^-1
+     */
     private String currentInput = "";
     private double num1;
     private double num2;
@@ -83,6 +87,8 @@ public class Calculator extends JFrame implements ActionListener {
         logBaseTenButton = createButton("log" + "\u2081" + "\u2080", font1);
         logBaseEButton = createButton("LN", font1);
         secondaryFunctionButton = createButton("2nd", font1);
+        xPowerOf2Button = createButton("x^2", font1);
+        oneOverXButton = createButton("1/x", font1);
 
         // Create a panel to arrange buttons in a grid
         JPanel buttonPanel = new JPanel();
@@ -95,6 +101,9 @@ public class Calculator extends JFrame implements ActionListener {
         buttonPanel.add(eulerButton);
         buttonPanel.add(ceButton);
         buttonPanel.add(backspaceButton);
+        
+        buttonPanel.add(xPowerOf2Button);
+        buttonPanel.add(oneOverXButton);
         
         //row2
         buttonPanel.add(sqrRootButton);
@@ -329,7 +338,6 @@ public class Calculator extends JFrame implements ActionListener {
 					currentInput = "";
 					newInput = true;
 				 }
-				
 			}
 			
 			//Handle the action for the square root button
@@ -350,8 +358,6 @@ public class Calculator extends JFrame implements ActionListener {
 					currentInput = "";
 					newInput = true;
 				}
-				
-				
 			}
 			
 			//Handle the action for the log base 10 button
@@ -375,6 +381,26 @@ public class Calculator extends JFrame implements ActionListener {
 				newInput = true;
 			}
 			
+			//Handle the action for the xPowerOf2Button button
+			else if (source == xPowerOf2Button) {
+				double num = Double.parseDouble(currentInput);
+				double result = 0.0;
+				
+				//X cubed
+				if (isSecondaryMode) {
+					result = Math.pow(num, 3);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				//X squared
+				} else {
+					result = Math.pow(num, 2);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				}
+			}
+			
 			//Handle the action for the secondary function button
 			else if (source == secondaryFunctionButton) {
 				//Toggle between secondary functions
@@ -386,18 +412,18 @@ public class Calculator extends JFrame implements ActionListener {
 					sinButton.setText("sin" + "\u207B" + "\u00B9" );
 					cosButton.setText("cos" + "\u207B" + "\u00B9" );
 					tanButton.setText("tan" + "\u207B" + "\u00B9" );
+					xPowerOf2Button.setText("x^3");
 				} else {
 					sqrRootButton.setText("√x");
 					powerOfButton.setText("xⁿ");
 					powerOfTenButton.setText("10ˣ");					
 					sinButton.setText("sin");
 					cosButton.setText("cos");
-					tanButton.setText("tan");					
+					tanButton.setText("tan");
+					xPowerOf2Button.setText("x^2");
 				}
 			}
-		}
-		
-		
+		}		
 	}
 
 	private boolean isNumeric(String str) {
