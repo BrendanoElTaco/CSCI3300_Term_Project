@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
+	//I have not idea what this is lol
     private static final long serialVersionUID = 1L;
+    
     private JTextField resultField;
     private JButton[] numButtons;
     private JButton[] operationButtons;
@@ -153,80 +155,13 @@ public class Calculator extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource(); // Identify the source of the action event
-
-		// Handle the action for the sign toggle button
-		if (source == signToggleButton) {
-			// Toggle the sign (positive/negative) of the current input
-			isPositive = !isPositive;
-			if (!currentInput.isEmpty() && !currentInput.equals("0")) {
-				double input = Double.parseDouble(currentInput);
-				// Apply the sign change and update the current input and display
-				input = isPositive ? Math.abs(input) : -Math.abs(input);
-				currentInput = String.valueOf(input);
-				resultField.setText(currentInput);
-			}
-		}
-
-		// Handle the action for trigonometric function buttons (sin, cos, tan)
-		else if (source == sinButton || source == cosButton || source == tanButton) {
-			if (!currentInput.isEmpty()) {
-				double angle = Double.parseDouble(currentInput);
-				double result = 0.0;
-
-				// Calculate the trigonometric result based on the clicked button
-				if (source == sinButton) {
-					if (isSecondaryMode) {
-						//arcsin
-						result = Math.asin(angle);
-					} else {
-						result = Math.sin(Math.toRadians(angle));
-					}
-				} else if (source == cosButton) {
-					if (isSecondaryMode) {
-						//arccos
-						result = Math.acos(angle);
-					} else {
-						result = Math.cos(Math.toRadians(angle));
-					}
-				} else if (source == tanButton) {
-					if (isSecondaryMode) {
-						//arctan
-						result = Math.atan(angle);
-					} else {
-						result = Math.tan(Math.toRadians(angle));
-					}
-				}
-
-				// Display the result, clear the current input for a new one
-				resultField.setText(String.valueOf(result));
-				currentInput = "";
-				newInput = true;
-			}
-		}
-
-		// Handle the action for the decimal button
-		else if (source == decimalButton) {
-			// Add a decimal point to the current input if not already present
-			if (!currentInput.contains(".")) {
-				currentInput += ".";
-				resultField.setText(currentInput);
-			}
-		}
-
-		// Handle the action for the backspace button
-		else if (source == backspaceButton) {
-			if (!currentInput.isEmpty()) {
-				// Remove the last character from the current input
-				currentInput = currentInput.substring(0, currentInput.length() - 1);
-				resultField.setText(currentInput);
-			}
-		}
-
-		// Handle actions for numeric buttons (0-9)
-		else if (source instanceof JButton) {
+		
+		//BUTTON HANDLING
+		if (source instanceof JButton) {
 			JButton button = (JButton) source;
 			String buttonText = button.getText();
-
+			
+			// Handle actions for numeric buttons (0-9)
 			if (isNumeric(buttonText)) {
 				if (newInput) {
 					currentInput = buttonText;
@@ -237,8 +172,8 @@ public class Calculator extends JFrame implements ActionListener {
 				resultField.setText(currentInput);
 			}
 
-			// Handle actions for basic arithmetic operator buttons (+, -, *, /)
-			else if ("+-*/".contains(buttonText)) {
+			// Handle actions for basic arithmetic operator buttons (+, -, ×, ÷)
+			else if ("+-×÷".contains(buttonText)) {
 				if (!currentInput.isEmpty()) {
 					if (num1 == 0) {
 						num1 = Double.parseDouble(currentInput);
@@ -263,6 +198,74 @@ public class Calculator extends JFrame implements ActionListener {
 					newInput = true;
 				}
 			}
+			
+			// Handle the action for the sign toggle button
+			else if (source == signToggleButton) {
+				// Toggle the sign (positive/negative) of the current input
+				isPositive = !isPositive;
+				if (!currentInput.isEmpty() && !currentInput.equals("0")) {
+					double input = Double.parseDouble(currentInput);
+					// Apply the sign change and update the current input and display
+					input = isPositive ? Math.abs(input) : -Math.abs(input);
+					currentInput = String.valueOf(input);
+					resultField.setText(currentInput);
+				}
+			}
+
+			// Handle the action for trigonometric function buttons (sin, cos, tan)
+			else if (source == sinButton || source == cosButton || source == tanButton) {
+				if (!currentInput.isEmpty()) {
+					double angle = Double.parseDouble(currentInput);
+					double result = 0.0;
+
+					// Calculate the trigonometric result based on the clicked button
+					if (source == sinButton) {
+						if (isSecondaryMode) {
+							//arcsin
+							result = Math.asin(angle);
+						} else {
+							result = Math.sin(Math.toRadians(angle));
+						}
+					} else if (source == cosButton) {
+						if (isSecondaryMode) {
+							//arccos
+							result = Math.acos(angle);
+						} else {
+							result = Math.cos(Math.toRadians(angle));
+						}
+					} else if (source == tanButton) {
+						if (isSecondaryMode) {
+							//arctan
+							result = Math.atan(angle);
+						} else {
+							result = Math.tan(Math.toRadians(angle));
+						}
+					}
+
+					// Display the result, clear the current input for a new one
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				}
+			}
+
+			// Handle the action for the decimal button
+			else if (source == decimalButton) {
+				// Add a decimal point to the current input if not already present
+				if (!currentInput.contains(".")) {
+					currentInput += ".";
+					resultField.setText(currentInput);
+				}
+			}
+
+			// Handle the action for the backspace button
+			else if (source == backspaceButton) {
+				if (!currentInput.isEmpty()) {
+					// Remove the last character from the current input
+					currentInput = currentInput.substring(0, currentInput.length() - 1);
+					resultField.setText(currentInput);
+				}
+			}
 
 			// Handle the action for the power of button (xⁿ)
 			else if (source == powerOfButton) {
@@ -279,8 +282,6 @@ public class Calculator extends JFrame implements ActionListener {
 						currentInput = "";
 						newInput = true;
 					}
-					
-					
 				}
 			}
 
@@ -330,6 +331,7 @@ public class Calculator extends JFrame implements ActionListener {
 				 }
 				
 			}
+			
 			//Handle the action for the square root button
 			else if (source == sqrRootButton) {
 				double num = Double.parseDouble(currentInput);
@@ -351,22 +353,17 @@ public class Calculator extends JFrame implements ActionListener {
 				
 				
 			}
+			
 			//Handle the action for the log base 10 button
 			else if (source == logBaseTenButton) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
-				/*if (isSecondaryMode) {
-					selectedOperation = "log" + "\u2099" + "x";
-					currentInput = "";
-					newInput = true;
-				} else {*/
-					result = Math.log10(num);
-					resultField.setText(String.valueOf(result));
-					currentInput = "";
-					newInput = true;
-				//}
-				
+				result = Math.log10(num);
+				resultField.setText(String.valueOf(result));
+				currentInput = "";
+				newInput = true;				
 			}
+			
 			//Handle the action for the log base e button
 			else if (source == logBaseEButton) {
 				double num = Double.parseDouble(currentInput);
@@ -377,6 +374,7 @@ public class Calculator extends JFrame implements ActionListener {
 				currentInput = "";
 				newInput = true;
 			}
+			
 			//Handle the action for the secondary function button
 			else if (source == secondaryFunctionButton) {
 				//Toggle between secondary functions
@@ -388,19 +386,18 @@ public class Calculator extends JFrame implements ActionListener {
 					sinButton.setText("sin" + "\u207B" + "\u00B9" );
 					cosButton.setText("cos" + "\u207B" + "\u00B9" );
 					tanButton.setText("tan" + "\u207B" + "\u00B9" );
-					//logBaseTenButton.setText("log" + "\u2099" + "x");
 				} else {
 					sqrRootButton.setText("√x");
 					powerOfButton.setText("xⁿ");
 					powerOfTenButton.setText("10ˣ");					
 					sinButton.setText("sin");
 					cosButton.setText("cos");
-					tanButton.setText("tan");
-					//logBaseTenButton.setText("log" + "\u2081" + "\u2080");
-					
+					tanButton.setText("tan");					
 				}
 			}
 		}
+		
+		
 	}
 
 	private boolean isNumeric(String str) {
@@ -413,9 +410,9 @@ public class Calculator extends JFrame implements ActionListener {
 			return num1 + num2;
 		case "-":
 			return num1 - num2;
-		case "*":
+		case "×":
 			return num1 * num2;
-		case "/":
+		case "÷":
 			// Don't divide by zero
 			if (num2 == 0) {
 				JOptionPane.showMessageDialog(this, "Error: Division by zero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -426,13 +423,8 @@ public class Calculator extends JFrame implements ActionListener {
 			return Math.pow(num1, num2);
 		case "y√x":
 			return Math.pow(num1, 1.0 / num2);
-		/*case "log" + "\u2099" + "x":
-			if (num1 <= 0 || num2 <= 0 || num2 == 1) {
-				JOptionPane.showMessageDialog(this, "Invalid input. x and base must be positive, and base must not be 1.", "Error", JOptionPane.ERROR_MESSAGE);
-	        }
-	        // Calculate and return the custom base logarithm
-	        return Math.log(num1) / Math.log(num2);*/
 		default:
+			JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
 			return 0.0;
 		}
 	}
