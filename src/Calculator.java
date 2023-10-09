@@ -90,11 +90,15 @@ public class Calculator extends JFrame implements ActionListener {
         logBaseTenButton = createButton("log" + "\u2081" + "\u2080", font1);
         logBaseEButton = createButton("LN", font1);
         secondaryFunctionButton = createButton("2nd", font1);
-        xPowerOf2Button = createButton("x^2", font1);
+        xPowerOf2Button = createButton("x²", font1);
         secButton = createButton("sec", font1);
         cscButton = createButton("csc", font1);
         cotButton = createButton("cot", font1);
         moduloButton = createButton("%", font1);
+        
+        // Create a button for logarithm operation
+        //logBaseYButton = createButton("log_y x", font1);
+
 
         // Create a panel to arrange buttons in a grid
         JPanel buttonPanel = new JPanel();
@@ -104,6 +108,7 @@ public class Calculator extends JFrame implements ActionListener {
         //row1
         buttonPanel.add(secondaryFunctionButton);
         buttonPanel.add(PIButton);
+        //buttonPanel.add(logBaseYButton);
         buttonPanel.add(eulerButton);
         buttonPanel.add(ceButton);
         buttonPanel.add(backspaceButton);
@@ -374,21 +379,51 @@ public class Calculator extends JFrame implements ActionListener {
 			else if (source == logBaseTenButton) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
-				result = Math.log10(num);
-				resultField.setText(String.valueOf(result));
-				currentInput = "";
-				newInput = true;				
+				//Secondary Mode log_y x
+				if (isSecondaryMode) {
+			        // Prompt the user for the base (y) using input dialog
+			        String baseInput = JOptionPane.showInputDialog(this, "Enter the base (y) for the logarithm:");
+			        
+			        if (baseInput != null && !baseInput.isEmpty()) {
+			            double base = Double.parseDouble(baseInput);
+			            
+			            if (base <= 0 || base == 1) {
+			                JOptionPane.showMessageDialog(this, "Invalid base (y) for logarithm", "Error", JOptionPane.ERROR_MESSAGE);
+			            } else {
+			                // Calculate the logarithm (log base y of x)
+			                result = Math.log(num) / Math.log(base);
+			                resultField.setText(String.valueOf(result));
+			                currentInput = "";
+			                newInput = true;
+			            }
+			        }
+				} else {
+					result = Math.log10(num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;	
+				}			
 			}
 			
 			//Handle the action for the log base e button
 			else if (source == logBaseEButton) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
+				//E^x
+				if (isSecondaryMode) {
+					result = Math.pow(Math.E, num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				//LN
+				} else {
+					result = Math.log(num);
+					resultField.setText(String.valueOf(result));
+					currentInput = "";
+					newInput = true;
+				}
 				
-				result = Math.log(num);
-				resultField.setText(String.valueOf(result));
-				currentInput = "";
-				newInput = true;
+				
 			}
 			
 			//Handle the action for the xPowerOf2Button button
@@ -479,7 +514,7 @@ public class Calculator extends JFrame implements ActionListener {
 			        newInput = true;
 			    }
 			}
-			
+						
 			//Handle the action for the secondary function button
 			else if (source == secondaryFunctionButton) {
 				//Toggle between secondary functions
@@ -491,10 +526,12 @@ public class Calculator extends JFrame implements ActionListener {
 					sinButton.setText("sin" + "\u207B" + "\u00B9" );
 					cosButton.setText("cos" + "\u207B" + "\u00B9" );
 					tanButton.setText("tan" + "\u207B" + "\u00B9" );
-					xPowerOf2Button.setText("x^3");
+					xPowerOf2Button.setText("x³");
 					secButton.setText("sec" + "\u207B" + "\u00B9" );
 					cscButton.setText("csc" + "\u207B" + "\u00B9" );
 					cotButton.setText("cot" + "\u207B" + "\u00B9" );
+					logBaseTenButton.setText("log" + "\u2099" + "x");
+					logBaseEButton.setText("eˣ");
 				} else {
 					sqrRootButton.setText("√x");
 					powerOfButton.setText("xⁿ");
@@ -502,10 +539,12 @@ public class Calculator extends JFrame implements ActionListener {
 					sinButton.setText("sin");
 					cosButton.setText("cos");
 					tanButton.setText("tan");
-					xPowerOf2Button.setText("x^2");
+					xPowerOf2Button.setText("x²");
 					secButton.setText("sec");
 					cscButton.setText("csc");
 					cotButton.setText("cot");
+					logBaseTenButton.setText("log" + "\u2081" + "\u2080");
+					logBaseEButton.setText("LN");
 				}
 			}
 		}		
