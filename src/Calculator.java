@@ -554,32 +554,32 @@ public class Calculator extends JFrame implements ActionListener {
 		return str.matches("-?\\d+(\\.\\d+)?");
 	}
 
-	private double performOperation(double num1, double num2, String operation) {
-		switch (operation) {
-		case "+":
-			return num1 + num2;
-		case "-":
-			return num1 - num2;
-		case "×":
-			return num1 * num2;
-		case "÷":
-			// Don't divide by zero
-			if (num2 == 0) {
-				JOptionPane.showMessageDialog(this, "Error: Division by zero", "Error", JOptionPane.ERROR_MESSAGE);
-				return 0.0;
-			}
-			return num1 / num2;
-		case "xⁿ":
-			return Math.pow(num1, num2);
-		case "y√x":
-			return Math.pow(num1, 1.0 / num2);
-		case "%":
-			return num1 % num2;
-		default:
-			JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
-			return 0.0;
-		}
-	}
+	 private double performOperation(double num1, double num2, String operation) {
+	        switch (operation) {
+	            case "+":
+	                return num1 + num2;
+	            case "-":
+	                return num1 - num2;
+	            case "×":
+	                return num1 * num2;
+	            case "÷":
+	                // Don't divide by zero
+	                if (num2 == 0) {
+	                    JOptionPane.showMessageDialog(this, "Error: Division by zero", "Error", JOptionPane.ERROR_MESSAGE);
+	                    return 0.0;
+	                }
+	                return num1 / num2;
+	            case "xⁿ":
+	                return Math.pow(num1, num2);
+	            case "y√x":
+	                return Math.pow(num1, 1.0 / num2);
+	            case "%":
+	                return num1 % num2;
+	            default:
+	                JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
+	                return 0.0;
+	        }
+	    }
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
