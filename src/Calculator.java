@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class Calculator extends JFrame implements ActionListener {
 	//I have not idea what this is lol
     private static final long serialVersionUID = 1L;
-    
+    //Buttons and result field
     private JTextField resultField;
     private JButton[] numButtons;
     private JButton[] operationButtons;
@@ -25,15 +25,11 @@ public class Calculator extends JFrame implements ActionListener {
     private JButton logBaseEButton;
     private JButton secondaryFunctionButton;
     private JButton xPowerOf2Button;
-    //private JButton oneOverXButton;
-    //private JButton absoluteValueButton;
     private JButton secButton;
     private JButton cscButton;
     private JButton cotButton;
     private JButton moduloButton;
-    /*
-     * Need exp (scientific notation)
-     */
+    
     private String currentInput = "";
     private double num1;
     private double num2;
@@ -45,7 +41,9 @@ public class Calculator extends JFrame implements ActionListener {
     public Calculator() {
         initializeUI();
     }
-
+    /*
+     * Need to implement multiple operator functionality
+     */
     private void initializeUI() {
         // Set up the main frame
         setTitle("Scientific Calculator");
@@ -93,8 +91,6 @@ public class Calculator extends JFrame implements ActionListener {
         logBaseEButton = createButton("LN", font1);
         secondaryFunctionButton = createButton("2nd", font1);
         xPowerOf2Button = createButton("x^2", font1);
-        //oneOverXButton = createButton("1/x", font1);
-        //absoluteValueButton = createButton("|x|", font1);
         secButton = createButton("sec", font1);
         cscButton = createButton("csc", font1);
         cotButton = createButton("cot", font1);
@@ -414,28 +410,6 @@ public class Calculator extends JFrame implements ActionListener {
 					newInput = true;
 				}
 			}
-			
-			//Handle the action for the xPowerOf2Button button
-			/*else if (source == oneOverXButton) {
-				double num = Double.parseDouble(currentInput);
-				double result = 0.0;
-				
-				result = 1 / num;
-				resultField.setText(String.valueOf(result));
-				currentInput = "";
-				newInput = true;
-			}
-			
-			//Handle the action for the absolute value button
-			else if (source == absoluteValueButton) {
-				double num = Double.parseDouble(currentInput);
-				double result = 0.0;
-				
-				result = Math.abs(num);
-				resultField.setText(String.valueOf(result));
-				currentInput = "";
-				newInput = true;
-			}*/
 			
 			//Handle the action for the secant function button
 			else if (source == secButton) {
