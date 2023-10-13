@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
-	//I have not idea what this is lol
+	//I have not idea what this is
     private static final long serialVersionUID = 1L;
     //Buttons and result field
     private JTextField resultField;
@@ -42,7 +42,7 @@ public class Calculator extends JFrame implements ActionListener {
         initializeUI();
     }
     /*
-     * Need to implement multiple operator functionality
+     * Need to implement multiple operator functionality after pressing equals
      */
     private void initializeUI() {
         // Set up the main frame
@@ -96,10 +96,6 @@ public class Calculator extends JFrame implements ActionListener {
         cotButton = createButton("cot", font1);
         moduloButton = createButton("%", font1);
         
-        // Create a button for logarithm operation
-        //logBaseYButton = createButton("log_y x", font1);
-
-
         // Create a panel to arrange buttons in a grid
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 5));
@@ -108,7 +104,6 @@ public class Calculator extends JFrame implements ActionListener {
         //row1
         buttonPanel.add(secondaryFunctionButton);
         buttonPanel.add(PIButton);
-        //buttonPanel.add(logBaseYButton);
         buttonPanel.add(eulerButton);
         buttonPanel.add(ceButton);
         buttonPanel.add(backspaceButton);
@@ -175,7 +170,7 @@ public class Calculator extends JFrame implements ActionListener {
         button.setFont(font);
         return button;
     }
-
+        
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource(); // Identify the source of the action event
