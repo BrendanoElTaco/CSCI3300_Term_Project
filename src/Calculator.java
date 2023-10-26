@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
-	//I have not idea what this is
+	//I have not idea what this is but i need it
     private static final long serialVersionUID = 1L;
     //Buttons and result field
     private JTextField resultField;
@@ -169,8 +169,8 @@ public class Calculator extends JFrame implements ActionListener {
         button.addActionListener(this);
         button.setFont(font);
         return button;
-    }
-        
+    }    
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource(); // Identify the source of the action event
