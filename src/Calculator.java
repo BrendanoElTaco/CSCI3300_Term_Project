@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
-	//I have not idea what this is but i need it
+	//I have not idea what this is
     private static final long serialVersionUID = 1L;
     //Buttons and result field
     private JTextField resultField;
@@ -37,66 +37,84 @@ public class Calculator extends JFrame implements ActionListener {
     private boolean isPositive = true;
     private boolean newInput = true;
     private boolean isSecondaryMode = false;
-
+    
+    private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
+    private final Font PI_BUTTON_FONT = new Font("SansSerif", Font.BOLD, 30);
+    
     public Calculator() {
         initializeUI();
     }
-    /*
-     * Need to implement multiple operator functionality after pressing equals
-     */
+    
     private void initializeUI() {
-        // Set up the main frame
         setTitle("Scientific Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(450, 550);
         setLocationRelativeTo(null);
 
-        // Define font for buttons and result field
-        Font font1 = new Font("SansSerif", Font.BOLD, 20);
-        Font font2 = new Font("SansSerif", Font.BOLD, 30);
+        initializeResultField();
+        initializeNumberButtons();
+        initializeOperationButtons();
+        initializeFunctionButtons();
 
-        // Create the result field and configure it
+        // Create the main panel to hold the result field and button panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(resultField, BorderLayout.NORTH);
+        mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
+
+        // Add the main panel to the frame
+        add(mainPanel);
+
+        // Make the frame visible
+        setVisible(true);
+    }
+    
+    private void initializeResultField() {
         resultField = new JTextField(10);
         resultField.setEditable(false);
         resultField.setFont(new Font("SansSerif", Font.BOLD, 40));
+    }
 
-        // Create number buttons (0-9)
+    private void initializeNumberButtons() {
         numButtons = new JButton[10];
         for (int i = 0; i < 10; i++) {
-            numButtons[i] = createButton(String.valueOf(i), font1);
+            numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
         }
+    }
 
-        // Create operation buttons (+, -, *, /)
+    private void initializeOperationButtons() {
         operationButtons = new JButton[4];
         String[] operations = { "+", "-", "\u00d7", "\u00f7" };
         for (int i = 0; i < 4; i++) {
-            operationButtons[i] = createButton(operations[i], font1);
+            operationButtons[i] = createButton(operations[i], BUTTON_FONT);
         }
-        
-        // Create other buttons (sin, cos, tan, etc.)
-        calculateButton = createButton("=", font1);
-        signToggleButton = createButton("+/-", font1);
-        sinButton = createButton("sin", font1);
-        cosButton = createButton("cos", font1);
-        tanButton = createButton("tan", font1);
-        decimalButton = createButton(".", font1);
-        powerOfButton = createButton("xⁿ", font1);
-        backspaceButton = createButton("⌫", font1);
-        ceButton = createButton("CE", font1);
-        eulerButton = createButton("e", font1);
-        PIButton = createButton("𝜋", font2);
-        powerOfTenButton = createButton("10ˣ", font1);
-        sqrRootButton = createButton("√x", font1);
-        logBaseTenButton = createButton("log" + "\u2081" + "\u2080", font1);
-        logBaseEButton = createButton("LN", font1);
-        secondaryFunctionButton = createButton("2nd", font1);
-        xPowerOf2Button = createButton("x²", font1);
-        secButton = createButton("sec", font1);
-        cscButton = createButton("csc", font1);
-        cotButton = createButton("cot", font1);
-        moduloButton = createButton("%", font1);
-        
-        // Create a panel to arrange buttons in a grid
+    }
+
+    private void initializeFunctionButtons() {
+    	calculateButton = createButton("=", BUTTON_FONT);
+        signToggleButton = createButton("+/-", BUTTON_FONT);
+        sinButton = createButton("sin", BUTTON_FONT);
+        cosButton = createButton("cos", BUTTON_FONT);
+        tanButton = createButton("tan", BUTTON_FONT);
+        decimalButton = createButton(".", BUTTON_FONT);
+        powerOfButton = createButton("xⁿ", BUTTON_FONT);
+        backspaceButton = createButton("⌫", BUTTON_FONT);
+        ceButton = createButton("CE", BUTTON_FONT);
+        eulerButton = createButton("e", BUTTON_FONT);
+        PIButton = createButton("𝜋", PI_BUTTON_FONT);
+        powerOfTenButton = createButton("10ˣ", BUTTON_FONT);
+        sqrRootButton = createButton("√x", BUTTON_FONT);
+        logBaseTenButton = createButton("log" + "\u2081" + "\u2080", BUTTON_FONT);
+        logBaseEButton = createButton("LN", BUTTON_FONT);
+        secondaryFunctionButton = createButton("2nd", BUTTON_FONT);
+        xPowerOf2Button = createButton("x²", BUTTON_FONT);
+        secButton = createButton("sec", BUTTON_FONT);
+        cscButton = createButton("csc", BUTTON_FONT);
+        cotButton = createButton("cot", BUTTON_FONT);
+        moduloButton = createButton("%", BUTTON_FONT);
+    }
+
+    private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 5));
 
@@ -150,27 +168,17 @@ public class Calculator extends JFrame implements ActionListener {
         buttonPanel.add(decimalButton);
         buttonPanel.add(calculateButton);
 
-        // Create the main panel to hold the result field and button panel
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(resultField, BorderLayout.NORTH);
-        mainPanel.add(buttonPanel, BorderLayout.CENTER);
-
-        // Add the main panel to the frame
-        add(mainPanel);
-
-        // Make the frame visible
-        setVisible(true);
+        return buttonPanel;
     }
-
+    
     private JButton createButton(String label, Font font) {
         // Create a JButton with the given label and font, and attach an ActionListener
         JButton button = new JButton(label);
         button.addActionListener(this);
         button.setFont(font);
         return button;
-    }    
-    
+    }
+        
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource(); // Identify the source of the action event
