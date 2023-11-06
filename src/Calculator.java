@@ -4,10 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
-    /**
+
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4519143440307608770L;
 	//Buttons and result field
     private JTextField resultField;
     private JButton[] numButtons;
@@ -302,7 +303,7 @@ public class Calculator extends JFrame implements ActionListener {
 					num1 = Double.parseDouble(currentInput);
 					//X root y
 					if (isSecondaryMode) {
-						selectedOperation = "y√x";
+						selectedOperation = "n√x";
 						currentInput = "";
 						newInput = true;
 					} else {
@@ -426,9 +427,7 @@ public class Calculator extends JFrame implements ActionListener {
 					resultField.setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
-				}
-				
-				
+				}				
 			}
 			
 			//Handle the action for the xPowerOf2Button button
@@ -527,7 +526,7 @@ public class Calculator extends JFrame implements ActionListener {
 				if (isSecondaryMode) {
 					sqrRootButton.setText("\u221b" + "x");
 					powerOfTenButton.setText("2ˣ");
-					powerOfButton.setText("y√x");
+					powerOfButton.setText("n√x");
 					sinButton.setText("sin" + "\u207B" + "\u00B9" );
 					cosButton.setText("cos" + "\u207B" + "\u00B9" );
 					tanButton.setText("tan" + "\u207B" + "\u00B9" );
@@ -577,7 +576,7 @@ public class Calculator extends JFrame implements ActionListener {
 	            return num1 / num2;
 	        case "xⁿ":
 	            return Math.pow(num1, num2);
-	        case "y√x":
+	        case "n√x":
 	            return Math.pow(num1, 1.0 / num2);
 	        case "%":
 	            return num1 % num2;
