@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
-	//I have not idea what this is
-    private static final long serialVersionUID = 1L;
-    //Buttons and result field
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//Buttons and result field
     private JTextField resultField;
     private JButton[] numButtons;
     private JButton[] operationButtons;
