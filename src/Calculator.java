@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
-
 	/**
 	 * 
 	 */
@@ -48,6 +47,11 @@ public class Calculator extends JFrame implements ActionListener {
         initializeUI();
     }
     
+    // Convert HTML color string to a Color object
+    Color bgColor = Color.decode("#f3f3f3");
+    Color equalBgColor = Color.decode("#695b2e");
+    Color buttonBgColor = Color.decode("#f9f9f9");
+    
     private void initializeUI() {
         setTitle("Scientific Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +68,8 @@ public class Calculator extends JFrame implements ActionListener {
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(resultField, BorderLayout.NORTH);
         mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
-
+        mainPanel.setBackground(bgColor);
+        
         // Add the main panel to the frame
         add(mainPanel);
 
@@ -76,12 +81,15 @@ public class Calculator extends JFrame implements ActionListener {
         resultField = new JTextField(10);
         resultField.setEditable(false);
         resultField.setFont(new Font("SansSerif", Font.BOLD, 40));
+        resultField.setBackground(bgColor);
+        
     }
 
     private void initializeNumberButtons() {
         numButtons = new JButton[10];
         for (int i = 0; i < 10; i++) {
             numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
+            numButtons[i].setBackground(buttonBgColor);
         }
     }
 
@@ -90,11 +98,13 @@ public class Calculator extends JFrame implements ActionListener {
         String[] operations = { "+", "-", "\u00d7", "\u00f7" };
         for (int i = 0; i < 4; i++) {
             operationButtons[i] = createButton(operations[i], BUTTON_FONT);
+            operationButtons[i].setBackground(buttonBgColor);
         }
     }
 
     private void initializeFunctionButtons() {
     	calculateButton = createButton("=", BUTTON_FONT);
+    	calculateButton.setBackground(equalBgColor);
         signToggleButton = createButton("+/-", BUTTON_FONT);
         sinButton = createButton("sin", BUTTON_FONT);
         cosButton = createButton("cos", BUTTON_FONT);
@@ -122,6 +132,7 @@ public class Calculator extends JFrame implements ActionListener {
         buttonPanel.setLayout(new GridLayout(0, 5));
 
         // Add buttons to the panel in the desired layout
+        //Five buttons per row
         //row1
         buttonPanel.add(secondaryFunctionButton);
         buttonPanel.add(PIButton);
@@ -179,6 +190,7 @@ public class Calculator extends JFrame implements ActionListener {
         JButton button = new JButton(label);
         button.addActionListener(this);
         button.setFont(font);
+        button.setBackground(buttonBgColor);
         return button;
     }
         
