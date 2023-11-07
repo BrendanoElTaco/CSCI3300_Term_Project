@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
-    /**
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4519143440307608770L;
 	//Buttons and result field
     private JTextField resultField;
     private JButton[] numButtons;
@@ -47,6 +47,11 @@ public class Calculator extends JFrame implements ActionListener {
         initializeUI();
     }
     
+    // Convert HTML color string to a Color object
+    Color bgColor = Color.decode("#f3f3f3");
+    Color equalBgColor = Color.decode("#695b2e");
+    Color buttonBgColor = Color.decode("#f9f9f9");
+    
     private void initializeUI() {
         setTitle("Scientific Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +68,8 @@ public class Calculator extends JFrame implements ActionListener {
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(resultField, BorderLayout.NORTH);
         mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
-
+        mainPanel.setBackground(bgColor);
+        
         // Add the main panel to the frame
         add(mainPanel);
 
@@ -75,12 +81,15 @@ public class Calculator extends JFrame implements ActionListener {
         resultField = new JTextField(10);
         resultField.setEditable(false);
         resultField.setFont(new Font("SansSerif", Font.BOLD, 40));
+        resultField.setBackground(bgColor);
+        
     }
 
     private void initializeNumberButtons() {
         numButtons = new JButton[10];
         for (int i = 0; i < 10; i++) {
             numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
+            numButtons[i].setBackground(buttonBgColor);
         }
     }
 
@@ -89,11 +98,13 @@ public class Calculator extends JFrame implements ActionListener {
         String[] operations = { "+", "-", "\u00d7", "\u00f7" };
         for (int i = 0; i < 4; i++) {
             operationButtons[i] = createButton(operations[i], BUTTON_FONT);
+            operationButtons[i].setBackground(buttonBgColor);
         }
     }
 
     private void initializeFunctionButtons() {
     	calculateButton = createButton("=", BUTTON_FONT);
+    	calculateButton.setBackground(equalBgColor);
         signToggleButton = createButton("+/-", BUTTON_FONT);
         sinButton = createButton("sin", BUTTON_FONT);
         cosButton = createButton("cos", BUTTON_FONT);
@@ -121,6 +132,7 @@ public class Calculator extends JFrame implements ActionListener {
         buttonPanel.setLayout(new GridLayout(0, 5));
 
         // Add buttons to the panel in the desired layout
+        //Five buttons per row
         //row1
         buttonPanel.add(secondaryFunctionButton);
         buttonPanel.add(PIButton);
@@ -178,6 +190,7 @@ public class Calculator extends JFrame implements ActionListener {
         JButton button = new JButton(label);
         button.addActionListener(this);
         button.setFont(font);
+        button.setBackground(buttonBgColor);
         return button;
     }
         
@@ -302,7 +315,7 @@ public class Calculator extends JFrame implements ActionListener {
 					num1 = Double.parseDouble(currentInput);
 					//X root y
 					if (isSecondaryMode) {
-						selectedOperation = "y√x";
+						selectedOperation = "n√x";
 						currentInput = "";
 						newInput = true;
 					} else {
@@ -426,9 +439,7 @@ public class Calculator extends JFrame implements ActionListener {
 					resultField.setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
-				}
-				
-				
+				}				
 			}
 			
 			//Handle the action for the xPowerOf2Button button
@@ -527,7 +538,7 @@ public class Calculator extends JFrame implements ActionListener {
 				if (isSecondaryMode) {
 					sqrRootButton.setText("\u221b" + "x");
 					powerOfTenButton.setText("2ˣ");
-					powerOfButton.setText("y√x");
+					powerOfButton.setText("n√x");
 					sinButton.setText("sin" + "\u207B" + "\u00B9" );
 					cosButton.setText("cos" + "\u207B" + "\u00B9" );
 					tanButton.setText("tan" + "\u207B" + "\u00B9" );
@@ -558,33 +569,34 @@ public class Calculator extends JFrame implements ActionListener {
 	private boolean isNumeric(String str) {
 		return str.matches("-?\\d+(\\.\\d+)?");
 	}
-
-	 private double performOperation(double num1, double num2, String operation) {
-	        switch (operation) {
-	            case "+":
-	                return num1 + num2;
-	            case "-":
-	                return num1 - num2;
-	            case "×":
-	                return num1 * num2;
-	            case "÷":
-	                // Don't divide by zero
-	                if (num2 == 0) {
-	                    JOptionPane.showMessageDialog(this, "Error: Division by zero", "Error", JOptionPane.ERROR_MESSAGE);
-	                    return 0.0;
-	                }
-	                return num1 / num2;
-	            case "xⁿ":
-	                return Math.pow(num1, num2);
-	            case "y√x":
-	                return Math.pow(num1, 1.0 / num2);
-	            case "%":
-	                return num1 % num2;
-	            default:
-	                JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
+	
+	//Method that preforms a operation with 2 input integers
+	private double performOperation(double num1, double num2, String operation) {
+		switch (operation) {
+			case "+":
+				return num1 + num2;
+	        case "-":
+	        	return num1 - num2;
+	        case "×":
+	            return num1 * num2;
+	        case "÷":
+	            // Don't divide by zero
+	            if (num2 == 0) {
+	                JOptionPane.showMessageDialog(this, "Error: Division by zero", "Error", JOptionPane.ERROR_MESSAGE);
 	                return 0.0;
-	        }
-	    }
+	            }
+	            return num1 / num2;
+	        case "xⁿ":
+	            return Math.pow(num1, num2);
+	        case "n√x":
+	            return Math.pow(num1, 1.0 / num2);
+	        case "%":
+	            return num1 % num2;
+	        default:
+	            JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
+	            return 0.0;
+		}
+	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
