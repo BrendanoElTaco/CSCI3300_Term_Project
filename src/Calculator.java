@@ -8,29 +8,6 @@ public class Calculator extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 4519143440307608770L;
-	//Buttons and result field
-    private JTextField resultField;
-    private JButton[] numButtons;
-    private JButton[] operationButtons;
-    private JButton calculateButton;
-    private JButton signToggleButton;
-    private JButton sinButton, cosButton, tanButton;
-    private JButton decimalButton;
-    private JButton powerOfButton;
-    private JButton backspaceButton;
-    private JButton ceButton;
-    private JButton eulerButton;
-    private JButton PIButton;
-    private JButton powerOfTenButton;
-    private JButton sqrRootButton;
-    private JButton logBaseTenButton;
-    private JButton logBaseEButton;
-    private JButton secondaryFunctionButton;
-    private JButton xPowerOf2Button;
-    private JButton secButton;
-    private JButton cscButton;
-    private JButton cotButton;
-    private JButton moduloButton;
     
     private String currentInput = "";
     private double num1;
@@ -38,13 +15,12 @@ public class Calculator extends JFrame implements ActionListener {
     private String selectedOperation;
     private boolean isPositive = true;
     private boolean newInput = true;
-    private boolean isSecondaryMode = false;
+    private boolean isSecondaryMode = false;    
     
-    private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
-    private final Font PI_BUTTON_FONT = new Font("SansSerif", Font.BOLD, 30);
+    CalculatorUI UI = new CalculatorUI();
     
     public Calculator() {
-        initializeUI();
+        UI.initializeUI(this);
     }
     
     // Convert HTML color string to a Color object
@@ -52,140 +28,7 @@ public class Calculator extends JFrame implements ActionListener {
     Color equalBgColor = Color.decode("#695b2e");
     Color buttonBgColor = Color.decode("#f9f9f9");
     
-    private void initializeUI() {
-        setTitle("Scientific Calculator");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(450, 550);
-        setLocationRelativeTo(null);
-
-        initializeResultField();
-        initializeNumberButtons();
-        initializeOperationButtons();
-        initializeFunctionButtons();
-
-        // Create the main panel to hold the result field and button panel
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(resultField, BorderLayout.NORTH);
-        mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
-        mainPanel.setBackground(bgColor);
-        
-        // Add the main panel to the frame
-        add(mainPanel);
-
-        // Make the frame visible
-        setVisible(true);
-    }
-    
-    private void initializeResultField() {
-        resultField = new JTextField(10);
-        resultField.setEditable(false);
-        resultField.setFont(new Font("SansSerif", Font.BOLD, 40));
-        resultField.setBackground(bgColor);
-        
-    }
-
-    private void initializeNumberButtons() {
-        numButtons = new JButton[10];
-        for (int i = 0; i < 10; i++) {
-            numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
-            numButtons[i].setBackground(buttonBgColor);
-        }
-    }
-
-    private void initializeOperationButtons() {
-        operationButtons = new JButton[4];
-        String[] operations = { "+", "-", "\u00d7", "\u00f7" };
-        for (int i = 0; i < 4; i++) {
-            operationButtons[i] = createButton(operations[i], BUTTON_FONT);
-            operationButtons[i].setBackground(buttonBgColor);
-        }
-    }
-
-    private void initializeFunctionButtons() {
-    	calculateButton = createButton("=", BUTTON_FONT);
-    	calculateButton.setBackground(equalBgColor);
-        signToggleButton = createButton("+/-", BUTTON_FONT);
-        sinButton = createButton("sin", BUTTON_FONT);
-        cosButton = createButton("cos", BUTTON_FONT);
-        tanButton = createButton("tan", BUTTON_FONT);
-        decimalButton = createButton(".", BUTTON_FONT);
-        powerOfButton = createButton("xⁿ", BUTTON_FONT);
-        backspaceButton = createButton("⌫", BUTTON_FONT);
-        ceButton = createButton("CE", BUTTON_FONT);
-        eulerButton = createButton("e", BUTTON_FONT);
-        PIButton = createButton("𝜋", PI_BUTTON_FONT);
-        powerOfTenButton = createButton("10ˣ", BUTTON_FONT);
-        sqrRootButton = createButton("√x", BUTTON_FONT);
-        logBaseTenButton = createButton("log" + "\u2081" + "\u2080", BUTTON_FONT);
-        logBaseEButton = createButton("LN", BUTTON_FONT);
-        secondaryFunctionButton = createButton("2nd", BUTTON_FONT);
-        xPowerOf2Button = createButton("x²", BUTTON_FONT);
-        secButton = createButton("sec", BUTTON_FONT);
-        cscButton = createButton("csc", BUTTON_FONT);
-        cotButton = createButton("cot", BUTTON_FONT);
-        moduloButton = createButton("%", BUTTON_FONT);
-    }
-
-    private JPanel createButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0, 5));
-
-        // Add buttons to the panel in the desired layout
-        //Five buttons per row
-        //row1
-        buttonPanel.add(secondaryFunctionButton);
-        buttonPanel.add(PIButton);
-        buttonPanel.add(eulerButton);
-        buttonPanel.add(ceButton);
-        buttonPanel.add(backspaceButton);
-                
-        //row2
-        buttonPanel.add(xPowerOf2Button);
-        buttonPanel.add(sinButton);
-        buttonPanel.add(cosButton);
-        buttonPanel.add(tanButton);
-        buttonPanel.add(moduloButton);
-     
-        //row3
-        buttonPanel.add(sqrRootButton);
-        buttonPanel.add(secButton);
-        buttonPanel.add(cscButton);
-        buttonPanel.add(cotButton);
-        buttonPanel.add(operationButtons[3]);
-        
-        //row4
-        buttonPanel.add(powerOfButton);
-        buttonPanel.add(numButtons[7]);
-        buttonPanel.add(numButtons[8]);
-        buttonPanel.add(numButtons[9]);
-        buttonPanel.add(operationButtons[2]);
-        
-        //row5
-        buttonPanel.add(powerOfTenButton);
-        buttonPanel.add(numButtons[4]);
-        buttonPanel.add(numButtons[5]);
-        buttonPanel.add(numButtons[6]);
-        buttonPanel.add(operationButtons[1]);
-        
-        //Row6
-        buttonPanel.add(logBaseTenButton);
-        buttonPanel.add(numButtons[1]);
-        buttonPanel.add(numButtons[2]);
-        buttonPanel.add(numButtons[3]);
-        buttonPanel.add(operationButtons[0]);
-        
-        //Row7
-        buttonPanel.add(logBaseEButton);
-        buttonPanel.add(signToggleButton);
-        buttonPanel.add(numButtons[0]);
-        buttonPanel.add(decimalButton);
-        buttonPanel.add(calculateButton);
-
-        return buttonPanel;
-    }
-    
-    private JButton createButton(String label, Font font) {
+    public JButton createButton(String label, Font font) {
         // Create a JButton with the given label and font, and attach an ActionListener
         JButton button = new JButton(label);
         button.addActionListener(this);
@@ -211,7 +54,7 @@ public class Calculator extends JFrame implements ActionListener {
 				} else {
 					currentInput += buttonText;
 				}
-				resultField.setText(currentInput);
+				UI.getResultField().setText(currentInput);				
 			}
 
 			// Handle actions for basic arithmetic operator buttons (+, -, ×, ÷)
@@ -222,7 +65,7 @@ public class Calculator extends JFrame implements ActionListener {
 					} else {
 						num2 = Double.parseDouble(currentInput);
 						num1 = performOperation(num1, num2, selectedOperation);
-						resultField.setText(String.valueOf(num1));
+						UI.getResultField().setText(String.valueOf(num1));
 					}
 					currentInput = "";
 					selectedOperation = buttonText;
@@ -234,7 +77,7 @@ public class Calculator extends JFrame implements ActionListener {
 				if (!currentInput.isEmpty()) {
 					num2 = Double.parseDouble(currentInput);
 					num1 = performOperation(num1, num2, selectedOperation);
-					resultField.setText(String.valueOf(num1));
+					UI.getResultField().setText(String.valueOf(num1));
 					currentInput = "";
 					selectedOperation = "";
 					newInput = true;
@@ -242,7 +85,7 @@ public class Calculator extends JFrame implements ActionListener {
 			}
 			
 			// Handle the action for the sign toggle button
-			else if (source == signToggleButton) {
+			else if (source == UI.getSignToggleButton()) {
 				// Toggle the sign (positive/negative) of the current input
 				isPositive = !isPositive;
 				if (!currentInput.isEmpty() && !currentInput.equals("0")) {
@@ -250,32 +93,32 @@ public class Calculator extends JFrame implements ActionListener {
 					// Apply the sign change and update the current input and display
 					input = isPositive ? Math.abs(input) : -Math.abs(input);
 					currentInput = String.valueOf(input);
-					resultField.setText(currentInput);
+					UI.getResultField().setText(currentInput);
 				}
 			}
 
 			// Handle the action for trigonometric function buttons (sin, cos, tan)
-			else if (source == sinButton || source == cosButton || source == tanButton) {
+			else if (source == UI.getSinButton() || source == UI.getCosButton() || source == UI.getTanButton()) {
 				if (!currentInput.isEmpty()) {
 					double angle = Double.parseDouble(currentInput);
 					double result = 0.0;
 
 					// Calculate the trigonometric result based on the clicked button
-					if (source == sinButton) {
+					if (source == UI.getSinButton()) {
 						if (isSecondaryMode) {
 							//arcsin
 							result = Math.asin(angle);
 						} else {
 							result = Math.sin(Math.toRadians(angle));
 						}
-					} else if (source == cosButton) {
+					} else if (source == UI.getCosButton()) {
 						if (isSecondaryMode) {
 							//arccos
 							result = Math.acos(angle);
 						} else {
 							result = Math.cos(Math.toRadians(angle));
 						}
-					} else if (source == tanButton) {
+					} else if (source == UI.getTanButton()) {
 						if (isSecondaryMode) {
 							//arctan
 							result = Math.atan(angle);
@@ -285,32 +128,32 @@ public class Calculator extends JFrame implements ActionListener {
 					}
 
 					// Display the result, clear the current input for a new one
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				}
 			}
 
 			// Handle the action for the decimal button
-			else if (source == decimalButton) {
+			else if (source == UI.getDecimalButton()) {
 				// Add a decimal point to the current input if not already present
 				if (!currentInput.contains(".")) {
 					currentInput += ".";
-					resultField.setText(currentInput);
+					UI.getResultField().setText(currentInput);
 				}
 			}
 
 			// Handle the action for the backspace button
-			else if (source == backspaceButton) {
+			else if (source == UI.getBackspaceButton()) {
 				if (!currentInput.isEmpty()) {
 					// Remove the last character from the current input
 					currentInput = currentInput.substring(0, currentInput.length() - 1);
-					resultField.setText(currentInput);
+					UI.getResultField().setText(currentInput);
 				}
 			}
 
 			// Handle the action for the power of button (xⁿ)
-			else if (source == powerOfButton) {
+			else if (source == UI.getPowerOfButton()) {
 				if (!currentInput.isEmpty()) {
 					num1 = Double.parseDouble(currentInput);
 					//X root y
@@ -328,7 +171,7 @@ public class Calculator extends JFrame implements ActionListener {
 			}
 
 			// Handle the action for the clear button (CE)
-			else if (source == ceButton) {
+			else if (source == UI.getCeButton()) {
 				// Clear all calculator states and reset the display
 				currentInput = "";
 				num1 = 0;
@@ -336,65 +179,65 @@ public class Calculator extends JFrame implements ActionListener {
 				selectedOperation = "";
 				isPositive = true;
 				newInput = true;
-				resultField.setText("");
+				UI.getResultField().setText("");
 			}
 
 			// Handle the action for Euler's button (e)
-			else if (source == eulerButton) {
+			else if (source == UI.getEulerButton()) {
 				// Set the current input to Euler's number and display it
 				currentInput = String.valueOf(Math.E); // Euler's number (approximately 2.71828)
-				resultField.setText(currentInput);
+				UI.getResultField().setText(currentInput);
 				newInput = true;
 			}
 
 			// Handle the action for the PI button (π)
-			else if (source == PIButton) {
+			else if (source == UI.getPIButton()) {
 				// Set the current input to π (pi) and display it
 				currentInput = String.valueOf(Math.PI);
-				resultField.setText(currentInput);
+				UI.getResultField().setText(currentInput);
 			}
 
 			// Handle the action for the power of ten button (10^x)
-			else if (source == powerOfTenButton) {
+			else if (source == UI.getPowerOfTenButton()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				 if (isSecondaryMode) {
 					// Calculate 2 raised to the power of the current input
 					result = Math.pow(2, num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				 } else {
 					// Calculate 10 raised to the power of the current input
 					result = Math.pow(10, num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				 }
 			}
 			
 			//Handle the action for the square root button
-			else if (source == sqrRootButton) {
+			else if (source == UI.getSqrRootButton()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				
 				if (isSecondaryMode) {
 					//Cube-root
 					result = Math.cbrt(num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				} else {
 					// Square-root
 					result = Math.sqrt(num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				}
 			}
 			
 			//Handle the action for the log base 10 button
-			else if (source == logBaseTenButton) {
+			else if (source == UI.getLogBaseTenButton()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				//Secondary Mode log_y x
@@ -410,119 +253,119 @@ public class Calculator extends JFrame implements ActionListener {
 			            } else {
 			                // Calculate the logarithm (log base y of x)
 			                result = Math.log(num) / Math.log(base);
-			                resultField.setText(String.valueOf(result));
+			                UI.getResultField().setText(String.valueOf(result));
 			                currentInput = "";
 			                newInput = true;
 			            }
 			        }
 				} else {
 					result = Math.log10(num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;	
 				}			
 			}
 			
 			//Handle the action for the log base e button
-			else if (source == logBaseEButton) {
+			else if (source == UI.getLogBaseEButton()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				//E^x
 				if (isSecondaryMode) {
 					result = Math.pow(Math.E, num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				//LN
 				} else {
 					result = Math.log(num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				}				
 			}
 			
 			//Handle the action for the xPowerOf2Button button
-			else if (source == xPowerOf2Button) {
+			else if (source == UI.getxPowerOf2Button()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				
 				//X cubed
 				if (isSecondaryMode) {
 					result = Math.pow(num, 3);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				//X squared
 				} else {
 					result = Math.pow(num, 2);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				}
 			}
 			
 			//Handle the action for the secant function button
-			else if (source == secButton) {
+			else if (source == UI.getSecButton()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				//Arc secant
 				if (isSecondaryMode) {
 					result = Math.acos(1.0 / num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				//Secant
 				} else {
 					result = 1 / Math.cos(Math.toRadians(num));
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				}
 			}
 			
 			//Handle the action for the cosecant function button
-			else if (source == cscButton) {
+			else if (source == UI.getCscButton()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				
 				//Arc cosecant
 				if (isSecondaryMode) {
 					result = Math.asin(1.0 / num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				//cosecant
 				} else {
 					result = 1 / Math.sin(num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				}
 			}
 			
 			//Handle the action for the cotangent function button
-			else if (source == cotButton) {
+			else if (source == UI.getCotButton()) {
 				double num = Double.parseDouble(currentInput);
 				double result = 0.0;
 				
 				//Arc cotangent
 				if (isSecondaryMode) {
 					result = Math.atan(1.0 / num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				//cotangent
 				} else {
 					result = 1 / Math.tan(num);
-					resultField.setText(String.valueOf(result));
+					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
 				}
 			}
 			
 			// Handle the action for the modulo button
-			else if (source == moduloButton) {
+			else if (source == UI.getModuloButton()) {
 			    if (!currentInput.isEmpty()) {
 			        num1 = Double.parseDouble(currentInput);
 			        selectedOperation = "%"; // Set the selected operation to modulo
@@ -532,35 +375,35 @@ public class Calculator extends JFrame implements ActionListener {
 			}
 						
 			//Handle the action for the secondary function button
-			else if (source == secondaryFunctionButton) {
+			else if (source == UI.getSecondaryFunctionButton()) {
 				//Toggle between secondary functions
 				isSecondaryMode = !isSecondaryMode;
 				if (isSecondaryMode) {
-					sqrRootButton.setText("\u221b" + "x");
-					powerOfTenButton.setText("2ˣ");
-					powerOfButton.setText("n√x");
-					sinButton.setText("sin" + "\u207B" + "\u00B9" );
-					cosButton.setText("cos" + "\u207B" + "\u00B9" );
-					tanButton.setText("tan" + "\u207B" + "\u00B9" );
-					xPowerOf2Button.setText("x³");
-					secButton.setText("sec" + "\u207B" + "\u00B9" );
-					cscButton.setText("csc" + "\u207B" + "\u00B9" );
-					cotButton.setText("cot" + "\u207B" + "\u00B9" );
-					logBaseTenButton.setText("log" + "\u2099" + "x");
-					logBaseEButton.setText("eˣ");
+					UI.getSqrRootButton().setText("\u221b" + "x");
+					UI.getPowerOfTenButton().setText("2ˣ");
+					UI.getPowerOfButton().setText("n√x");
+					UI.getSinButton().setText("sin" + "\u207B" + "\u00B9" );
+					UI.getCosButton().setText("cos" + "\u207B" + "\u00B9" );
+					UI.getTanButton().setText("tan" + "\u207B" + "\u00B9" );
+					UI.getxPowerOf2Button().setText("x³");
+					UI.getSecButton().setText("sec" + "\u207B" + "\u00B9" );
+					UI.getCscButton().setText("csc" + "\u207B" + "\u00B9" );
+					UI.getCotButton().setText("cot" + "\u207B" + "\u00B9" );
+					UI.getLogBaseTenButton().setText("log" + "\u2099" + "x");
+					UI.logBaseEButton.setText("eˣ");
 				} else {
-					sqrRootButton.setText("√x");
-					powerOfButton.setText("xⁿ");
-					powerOfTenButton.setText("10ˣ");					
-					sinButton.setText("sin");
-					cosButton.setText("cos");
-					tanButton.setText("tan");
-					xPowerOf2Button.setText("x²");
-					secButton.setText("sec");
-					cscButton.setText("csc");
-					cotButton.setText("cot");
-					logBaseTenButton.setText("log" + "\u2081" + "\u2080");
-					logBaseEButton.setText("LN");
+					UI.getSqrRootButton().setText("√x");
+					UI.getPowerOfButton().setText("xⁿ");
+					UI.getPowerOfTenButton().setText("10ˣ");					
+					UI.getSinButton().setText("sin");
+					UI.getCosButton().setText("cos");
+					UI.getTanButton().setText("tan");
+					UI.getxPowerOf2Button().setText("x²");
+					UI.getSecButton().setText("sec");
+					UI.getCscButton().setText("csc");
+					UI.getCotButton().setText("cot");
+					UI.getLogBaseTenButton().setText("log" + "\u2081" + "\u2080");
+					UI.getLogBaseEButton().setText("LN");
 				}
 			}
 		}		
