@@ -8,29 +8,6 @@ public class Calculator extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 4519143440307608770L;
-	//Buttons and result field
-    /*private JTextField resultField;
-    private JButton[] numButtons;
-    private JButton[] operationButtons;
-    private JButton calculateButton;
-    private JButton signToggleButton;
-    private JButton sinButton, cosButton, tanButton;
-    private JButton decimalButton;
-    private JButton powerOfButton;
-    private JButton backspaceButton;
-    private JButton ceButton;
-    private JButton eulerButton;
-    private JButton PIButton;
-    private JButton powerOfTenButton;
-    private JButton sqrRootButton;
-    private JButton logBaseTenButton;
-    private JButton logBaseEButton;
-    private JButton secondaryFunctionButton;
-    private JButton xPowerOf2Button;
-    private JButton secButton;
-    private JButton cscButton;
-    private JButton cotButton;
-    private JButton moduloButton;*/
     
     private String currentInput = "";
     private double num1;
@@ -38,156 +15,18 @@ public class Calculator extends JFrame implements ActionListener {
     private String selectedOperation;
     private boolean isPositive = true;
     private boolean newInput = true;
-    private boolean isSecondaryMode = false;
-    
-    //private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
-    //private final Font PI_BUTTON_FONT = new Font("SansSerif", Font.BOLD, 30);
-    
+    private boolean isSecondaryMode = false;    
     
     CalculatorUI UI = new CalculatorUI();
     
     public Calculator() {
-        
-        UI.initializeUI();
+        UI.initializeUI(this);
     }
     
     // Convert HTML color string to a Color object
     Color bgColor = Color.decode("#f3f3f3");
     Color equalBgColor = Color.decode("#695b2e");
     Color buttonBgColor = Color.decode("#f9f9f9");
-    /*
-    private void initializeUI() {
-        setTitle("Scientific Calculator");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(450, 550);
-        setLocationRelativeTo(null);
-
-        initializeResultField();
-        initializeNumberButtons();
-        initializeOperationButtons();
-        initializeFunctionButtons();
-
-        // Create the main panel to hold the result field and button panel
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(resultField, BorderLayout.NORTH);
-        mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
-        mainPanel.setBackground(bgColor);
-        
-        // Add the main panel to the frame
-        add(mainPanel);
-
-        // Make the frame visible
-        setVisible(true);
-    }
-    
-    private void initializeResultField() {
-        resultField = new JTextField(10);
-        resultField.setEditable(false);
-        resultField.setFont(new Font("SansSerif", Font.BOLD, 40));
-        resultField.setBackground(bgColor);
-        
-    }
-
-    private void initializeNumberButtons() {
-        numButtons = new JButton[10];
-        for (int i = 0; i < 10; i++) {
-            numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
-            numButtons[i].setBackground(buttonBgColor);
-        }
-    }
-
-    private void initializeOperationButtons() {
-        operationButtons = new JButton[4];
-        String[] operations = { "+", "-", "\u00d7", "\u00f7" };
-        for (int i = 0; i < 4; i++) {
-            operationButtons[i] = createButton(operations[i], BUTTON_FONT);
-            operationButtons[i].setBackground(buttonBgColor);
-        }
-    }
-
-    private void initializeFunctionButtons() {
-    	calculateButton = createButton("=", BUTTON_FONT);
-    	calculateButton.setBackground(equalBgColor);
-        signToggleButton = createButton("+/-", BUTTON_FONT);
-        sinButton = createButton("sin", BUTTON_FONT);
-        cosButton = createButton("cos", BUTTON_FONT);
-        tanButton = createButton("tan", BUTTON_FONT);
-        decimalButton = createButton(".", BUTTON_FONT);
-        powerOfButton = createButton("xⁿ", BUTTON_FONT);
-        backspaceButton = createButton("⌫", BUTTON_FONT);
-        ceButton = createButton("CE", BUTTON_FONT);
-        eulerButton = createButton("e", BUTTON_FONT);
-        PIButton = createButton("𝜋", PI_BUTTON_FONT);
-        powerOfTenButton = createButton("10ˣ", BUTTON_FONT);
-        sqrRootButton = createButton("√x", BUTTON_FONT);
-        logBaseTenButton = createButton("log" + "\u2081" + "\u2080", BUTTON_FONT);
-        logBaseEButton = createButton("LN", BUTTON_FONT);
-        secondaryFunctionButton = createButton("2nd", BUTTON_FONT);
-        xPowerOf2Button = createButton("x²", BUTTON_FONT);
-        secButton = createButton("sec", BUTTON_FONT);
-        cscButton = createButton("csc", BUTTON_FONT);
-        cotButton = createButton("cot", BUTTON_FONT);
-        moduloButton = createButton("%", BUTTON_FONT);
-    }
-
-    private JPanel createButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0, 5));
-
-        // Add buttons to the panel in the desired layout
-        //Five buttons per row
-        //row1
-        buttonPanel.add(secondaryFunctionButton);
-        buttonPanel.add(PIButton);
-        buttonPanel.add(eulerButton);
-        buttonPanel.add(ceButton);
-        buttonPanel.add(backspaceButton);
-                
-        //row2
-        buttonPanel.add(xPowerOf2Button);
-        buttonPanel.add(sinButton);
-        buttonPanel.add(cosButton);
-        buttonPanel.add(tanButton);
-        buttonPanel.add(moduloButton);
-     
-        //row3
-        buttonPanel.add(sqrRootButton);
-        buttonPanel.add(secButton);
-        buttonPanel.add(cscButton);
-        buttonPanel.add(cotButton);
-        buttonPanel.add(operationButtons[3]);
-        
-        //row4
-        buttonPanel.add(powerOfButton);
-        buttonPanel.add(numButtons[7]);
-        buttonPanel.add(numButtons[8]);
-        buttonPanel.add(numButtons[9]);
-        buttonPanel.add(operationButtons[2]);
-        
-        //row5
-        buttonPanel.add(powerOfTenButton);
-        buttonPanel.add(numButtons[4]);
-        buttonPanel.add(numButtons[5]);
-        buttonPanel.add(numButtons[6]);
-        buttonPanel.add(operationButtons[1]);
-        
-        //Row6
-        buttonPanel.add(logBaseTenButton);
-        buttonPanel.add(numButtons[1]);
-        buttonPanel.add(numButtons[2]);
-        buttonPanel.add(numButtons[3]);
-        buttonPanel.add(operationButtons[0]);
-        
-        //Row7
-        buttonPanel.add(logBaseEButton);
-        buttonPanel.add(signToggleButton);
-        buttonPanel.add(numButtons[0]);
-        buttonPanel.add(decimalButton);
-        buttonPanel.add(calculateButton);
-
-        return buttonPanel;
-    }*/
     
     public JButton createButton(String label, Font font) {
         // Create a JButton with the given label and font, and attach an ActionListener
@@ -215,10 +54,7 @@ public class Calculator extends JFrame implements ActionListener {
 				} else {
 					currentInput += buttonText;
 				}
-				UI.getResultField().setText(currentInput);
-				
-				
-				
+				UI.getResultField().setText(currentInput);				
 			}
 
 			// Handle actions for basic arithmetic operator buttons (+, -, ×, ÷)

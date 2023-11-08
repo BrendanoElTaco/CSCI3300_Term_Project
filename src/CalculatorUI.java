@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,11 +35,11 @@ public class CalculatorUI extends JFrame {
     public JButton cotButton;
     public JButton moduloButton;
 	
+    //Fonts
     private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
     private final Font PI_BUTTON_FONT = new Font("SansSerif", Font.BOLD, 30);
     
-    
-    
+    //Getters and Setters
     public JTextField getResultField() {
 		return resultField;
 	}
@@ -242,27 +241,26 @@ public class CalculatorUI extends JFrame {
 	}
 
 	public Calculator getLogic() {
-		return logic;
+		return calculator;
 	}
 
 	public void setLogic(Calculator logic) {
-		this.logic = logic;
+		this.calculator = logic;
 	}
 
 	// Convert HTML color string to a Color object
     Color bgColor = Color.decode("#f3f3f3");
     Color equalBgColor = Color.decode("#695b2e");
     Color buttonBgColor = Color.decode("#f9f9f9");
-    
-    Calculator logic = new Calculator();
-    
-	public void initializeUI() {
+        
+	private Calculator calculator;
+
+    public void initializeUI(Calculator calc) {
+        this.calculator = calc;
         setTitle("Scientific Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(450, 550);
-        setLocationRelativeTo(null);
-        
-        
+        setLocationRelativeTo(null);       
 
         initializeResultField();
         initializeNumberButtons();
@@ -294,7 +292,7 @@ public class CalculatorUI extends JFrame {
     private void initializeNumberButtons() {
         numButtons = new JButton[10];
         for (int i = 0; i < 10; i++) {
-            numButtons[i] = logic.createButton(String.valueOf(i), BUTTON_FONT);
+            numButtons[i] = calculator.createButton(String.valueOf(i), BUTTON_FONT);
             numButtons[i].setBackground(buttonBgColor);
         }
     }
@@ -303,34 +301,34 @@ public class CalculatorUI extends JFrame {
         operationButtons = new JButton[4];
         String[] operations = { "+", "-", "\u00d7", "\u00f7" };
         for (int i = 0; i < 4; i++) {
-            operationButtons[i] = logic.createButton(operations[i], BUTTON_FONT);
+            operationButtons[i] = calculator.createButton(operations[i], BUTTON_FONT);
             operationButtons[i].setBackground(buttonBgColor);
         }
     }
 
     private void initializeFunctionButtons() {
-    	calculateButton = logic.createButton("=", BUTTON_FONT);
+    	calculateButton = calculator.createButton("=", BUTTON_FONT);
     	calculateButton.setBackground(equalBgColor);
-        signToggleButton = logic.createButton("+/-", BUTTON_FONT);
-        sinButton = logic.createButton("sin", BUTTON_FONT);
-        cosButton = logic.createButton("cos", BUTTON_FONT);
-        tanButton = logic.createButton("tan", BUTTON_FONT);
-        decimalButton = logic.createButton(".", BUTTON_FONT);
-        powerOfButton = logic.createButton("xⁿ", BUTTON_FONT);
-        backspaceButton = logic.createButton("⌫", BUTTON_FONT);
-        ceButton = logic.createButton("CE", BUTTON_FONT);
-        eulerButton = logic.createButton("e", BUTTON_FONT);
-        PIButton = logic.createButton("𝜋", PI_BUTTON_FONT);
-        powerOfTenButton = logic.createButton("10ˣ", BUTTON_FONT);
-        sqrRootButton = logic.createButton("√x", BUTTON_FONT);
-        logBaseTenButton = logic.createButton("log" + "\u2081" + "\u2080", BUTTON_FONT);
-        logBaseEButton = logic.createButton("LN", BUTTON_FONT);
-        secondaryFunctionButton = logic.createButton("2nd", BUTTON_FONT);
-        xPowerOf2Button = logic.createButton("x²", BUTTON_FONT);
-        secButton = logic.createButton("sec", BUTTON_FONT);
-        cscButton = logic.createButton("csc", BUTTON_FONT);
-        cotButton = logic.createButton("cot", BUTTON_FONT);
-        moduloButton = logic.createButton("%", BUTTON_FONT);
+        signToggleButton = calculator.createButton("+/-", BUTTON_FONT);
+        sinButton = calculator.createButton("sin", BUTTON_FONT);
+        cosButton = calculator.createButton("cos", BUTTON_FONT);
+        tanButton = calculator.createButton("tan", BUTTON_FONT);
+        decimalButton = calculator.createButton(".", BUTTON_FONT);
+        powerOfButton = calculator.createButton("xⁿ", BUTTON_FONT);
+        backspaceButton = calculator.createButton("⌫", BUTTON_FONT);
+        ceButton = calculator.createButton("CE", BUTTON_FONT);
+        eulerButton = calculator.createButton("e", BUTTON_FONT);
+        PIButton = calculator.createButton("𝜋", PI_BUTTON_FONT);
+        powerOfTenButton = calculator.createButton("10ˣ", BUTTON_FONT);
+        sqrRootButton = calculator.createButton("√x", BUTTON_FONT);
+        logBaseTenButton = calculator.createButton("log" + "\u2081" + "\u2080", BUTTON_FONT);
+        logBaseEButton = calculator.createButton("LN", BUTTON_FONT);
+        secondaryFunctionButton = calculator.createButton("2nd", BUTTON_FONT);
+        xPowerOf2Button = calculator.createButton("x²", BUTTON_FONT);
+        secButton = calculator.createButton("sec", BUTTON_FONT);
+        cscButton = calculator.createButton("csc", BUTTON_FONT);
+        cotButton = calculator.createButton("cot", BUTTON_FONT);
+        moduloButton = calculator.createButton("%", BUTTON_FONT);
     }
 
     private JPanel createButtonPanel() {
