@@ -2,9 +2,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 
 public class CalculatorUI extends JFrame {
@@ -34,6 +38,8 @@ public class CalculatorUI extends JFrame {
     public JButton cscButton;
     public JButton cotButton;
     public JButton moduloButton;
+    
+    private JPanel mainPanel;
 	
     //Fonts
     private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
@@ -252,6 +258,10 @@ public class CalculatorUI extends JFrame {
     Color bgColor = Color.decode("#f3f3f3");
     Color equalBgColor = Color.decode("#695b2e");
     Color buttonBgColor = Color.decode("#f9f9f9");
+    Color darkBgColor = Color.decode("#202020");
+    Color darkEqualBgColor = Color.decode("#cac585");
+    Color darkNumberBgColor = Color.decode("#3b3b3b");
+    Color darkButtonBgColor = Color.decode("#323232");
         
 	private Calculator calculator;
 
@@ -268,7 +278,7 @@ public class CalculatorUI extends JFrame {
         initializeFunctionButtons();
 
         // Create the main panel to hold the result field and button panel
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(resultField, BorderLayout.NORTH);
         mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
@@ -276,12 +286,51 @@ public class CalculatorUI extends JFrame {
         
         // Add the main panel to the frame
         add(mainPanel);
+        
+        initializeMenuBar();
 
         // Make the frame visible
         setVisible(true);
     }
     
-    private void initializeResultField() {
+    private void initializeMenuBar() {
+    	// Create the menu bar
+        JMenuBar menuBar = new JMenuBar();
+
+        // Create the "Customization" menu
+        JMenu customizationMenu = new JMenu("Customization");
+        menuBar.add(customizationMenu);
+
+        // Create radio button menu items
+        JRadioButtonMenuItem lightMode = new JRadioButtonMenuItem("Light Mode");
+        JRadioButtonMenuItem darkMode = new JRadioButtonMenuItem("Dark Mode");
+
+        // Group the radio buttons
+        ButtonGroup group = new ButtonGroup();
+        group.add(lightMode);
+        group.add(darkMode);
+
+        // Add radio buttons to the menu
+        customizationMenu.add(lightMode);
+        customizationMenu.add(darkMode);
+
+        // Action listeners
+        lightMode.addActionListener(e -> {
+            // Action for Option 1
+        });
+        
+        darkMode.addActionListener(e -> {
+            mainPanel.setBackground(darkBgColor);
+            resultField.setBackground(darkBgColor);
+            
+        });
+
+        // Add the menu bar to the frame
+        setJMenuBar(menuBar);
+		
+	}
+
+	private void initializeResultField() {
         resultField = new JTextField(10);
         resultField.setEditable(false);
         resultField.setFont(new Font("SansSerif", Font.BOLD, 40));
