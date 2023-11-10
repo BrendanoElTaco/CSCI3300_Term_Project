@@ -1,10 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CalculatorUI extends JFrame {
 	/**
-	 * 
+	 * Brendan LeGrand, CSCI 3300 - Term Project
+	 * Caculator UI
 	 */
 	private static final long serialVersionUID = 5294493750822072072L;
 	public JTextField resultField;
@@ -61,6 +63,7 @@ public class CalculatorUI extends JFrame {
         initializeNumberButtons();
         initializeOperationButtons();
         initializeFunctionButtons();
+        initializeMenuBar();
 
         // Create the main panel to hold the result field and button panel
         mainPanel = new JPanel();
@@ -72,8 +75,6 @@ public class CalculatorUI extends JFrame {
         // Add the main panel to the frame
         add(mainPanel);
         
-        initializeMenuBar();
-
         // Make the frame visible
         setVisible(true);
     }
@@ -85,10 +86,6 @@ public class CalculatorUI extends JFrame {
         // Create the "Customization" menu
         JMenu customizationMenu = new JMenu("Customization");
         menuBar.add(customizationMenu);
-        
-        //Create the help menu
-        JMenu helpMenu = new JMenu("Help");
-        menuBar.add(helpMenu);
 
         // Create radio button menu items
         JRadioButtonMenuItem lightMode = new JRadioButtonMenuItem("Light Mode");
@@ -107,11 +104,49 @@ public class CalculatorUI extends JFrame {
         lightMode.addActionListener(e -> {
         	setLightMode();
         });
+        
         darkMode.addActionListener(e -> {
             setDarkMode();
-            
         });
 
+        //Create the help menu
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem helpItem = new JMenuItem("Help Center");
+        menuBar.add(helpMenu);
+        
+        helpMenu.add(helpItem);
+        menuBar.add(helpMenu);
+        this.setJMenuBar(menuBar);
+        
+        // Add ActionListener to the helpItem
+        helpItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code to display HelpCenterPanel
+                HelpCenterPanel helpPanel = new HelpCenterPanel();
+                JOptionPane.showMessageDialog(null, helpPanel, "Help Center: Calculator Functionality", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        
+        //Create the about menu
+        JMenu aboutMenu = new JMenu("About");
+        JMenuItem aboutItem = new JMenuItem("About my Calculator");
+        menuBar.add(aboutMenu);
+        
+        aboutMenu.add(aboutItem);
+        menuBar.add(aboutMenu);
+        this.setJMenuBar(menuBar);
+        
+        // Add ActionListener to the menuItem
+        aboutItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Code to display AboutPanel
+                aboutPanel aboutPanel = new aboutPanel();
+                JOptionPane.showMessageDialog(null, aboutPanel, "Help Center: Calculator Functionality", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        
         // Add the menu bar to the frame
         setJMenuBar(menuBar);
 		
@@ -341,7 +376,7 @@ public class CalculatorUI extends JFrame {
         calculateButton.setForeground(null);
     }
     
-    //Getters and Setters
+    //Getters
     public JTextField getResultField() {
 		return resultField;
 	}
