@@ -54,7 +54,7 @@ public class CalculatorUI extends JFrame {
 	//Initialize UI
     public void initializeUI(Calculator calc) {
         this.calculator = calc;
-        setTitle("Scientific Calculator");
+        setTitle("NumCruncher - A scientific calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(450, 550);
         setLocationRelativeTo(null);       
@@ -82,7 +82,7 @@ public class CalculatorUI extends JFrame {
     private void initializeMenuBar() {
     	// Create the menu bar
         JMenuBar menuBar = new JMenuBar();
-
+        
         // Create the "Customization" menu
         JMenu customizationMenu = new JMenu("Customization");
         menuBar.add(customizationMenu);
@@ -143,7 +143,7 @@ public class CalculatorUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Code to display AboutPanel
                 aboutPanel aboutPanel = new aboutPanel();
-                JOptionPane.showMessageDialog(null, aboutPanel, "Help Center: Calculator Functionality", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, aboutPanel, "About NumCruncher", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         
