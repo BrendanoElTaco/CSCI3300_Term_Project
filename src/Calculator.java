@@ -22,7 +22,7 @@ public class Calculator extends JFrame implements ActionListener {
     
     public Calculator() {
         UI.initializeUI(this);
-        JOptionPane.showMessageDialog(null, "Welcome to NumCruncher!\n" + "Please read the FAQ in the help center for operating instructions", "Welcome", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Welcome to NumCruncher! \n" + "Please read the FAQ in the help center for operating instructions", "Welcome", JOptionPane.INFORMATION_MESSAGE);
     }
     
     // Convert HTML color string to a Color object
