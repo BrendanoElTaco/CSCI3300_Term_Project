@@ -318,7 +318,6 @@ public class CalculatorUI extends JFrame {
         lightMode.addActionListener(e -> {
             // Action for Option 1
         });
-        
         darkMode.addActionListener(e -> {
             mainPanel.setBackground(darkBgColor);
             resultField.setBackground(darkBgColor);
