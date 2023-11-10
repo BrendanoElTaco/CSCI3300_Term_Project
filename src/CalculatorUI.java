@@ -265,6 +265,7 @@ public class CalculatorUI extends JFrame {
         
 	private Calculator calculator;
 
+	//Initialize UI
     public void initializeUI(Calculator calc) {
         this.calculator = calc;
         setTitle("Scientific Calculator");
