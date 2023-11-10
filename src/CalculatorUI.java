@@ -389,10 +389,6 @@ public class CalculatorUI extends JFrame {
 		return operationButtons;
 	}
 
-	public JButton getCalculateButton() {
-		return calculateButton;
-	}
-
 	public JButton getSignToggleButton() {
 		return signToggleButton;
 	}
