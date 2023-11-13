@@ -224,17 +224,30 @@ public class Calculator extends JFrame implements ActionListener {
 				double result = 0.0;
 				
 				if (isSecondaryMode) {
-					//Cube-root
-					result = Math.cbrt(num);
-					UI.getResultField().setText(String.valueOf(result));
-					currentInput = "";
-					newInput = true;
+					if (num < 0) {
+		                JOptionPane.showMessageDialog(this, "Error: Cannot Cube-root a negative number", "Error", JOptionPane.ERROR_MESSAGE);
+		                currentInput = "";
+						newInput = true;
+		            } else {
+						//Cube-root
+						result = Math.cbrt(num);
+						UI.getResultField().setText(String.valueOf(result));
+						currentInput = "";
+						newInput = true;
+		            }
 				} else {
-					// Square-root
-					result = Math.sqrt(num);
-					UI.getResultField().setText(String.valueOf(result));
-					currentInput = "";
-					newInput = true;
+					// Don't sqrt negative
+		            if (num < 0) {
+		                JOptionPane.showMessageDialog(this, "Error: Cannot Square-root a negative number", "Error", JOptionPane.ERROR_MESSAGE);
+		                currentInput = "";
+						newInput = true;
+		            } else {
+						// Square-root
+						result = Math.sqrt(num);
+						UI.getResultField().setText(String.valueOf(result));
+						currentInput = "";
+						newInput = true;
+		            }
 				}
 			}
 			
@@ -280,10 +293,14 @@ public class Calculator extends JFrame implements ActionListener {
 					newInput = true;
 				//LN
 				} else {
+					if (num < 0) {
+		                JOptionPane.showMessageDialog(this, "Invalid number for logarithm", "Error", JOptionPane.ERROR_MESSAGE);
+		            } else {
 					result = Math.log(num);
 					UI.getResultField().setText(String.valueOf(result));
 					currentInput = "";
 					newInput = true;
+		            }
 				}				
 			}
 			
@@ -436,6 +453,11 @@ public class Calculator extends JFrame implements ActionListener {
 	        case "n√x":
 	            return Math.pow(num1, 1.0 / num2);
 	        case "%":
+	        	// Don't module by zero
+	            if (num2 == 0) {
+	                JOptionPane.showMessageDialog(this, "Error: Cannot use zero with a modulo operation", "Error", JOptionPane.ERROR_MESSAGE);
+	                return 0.0;
+	            }
 	            return num1 % num2;
 	        default:
 	            JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
