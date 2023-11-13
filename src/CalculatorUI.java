@@ -142,7 +142,7 @@ public class CalculatorUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Code to display AboutPanel
-                aboutPanel aboutPanel = new aboutPanel();
+                AboutPanel aboutPanel = new AboutPanel();
                 JOptionPane.showMessageDialog(null, aboutPanel, "About NumCruncher", JOptionPane.INFORMATION_MESSAGE);
             }
         });

@@ -4,14 +4,14 @@ import javax.swing.event.HyperlinkListener;
 import java.awt.Desktop;
 import java.net.URI;
 
-public class aboutPanel extends JPanel {
+public class AboutPanel extends JPanel {
     /**
 	 * Brendan LeGrand, CSCI 3300 - Term Project
 	 * About Panel
 	 */
 	private static final long serialVersionUID = -6578036529732131603L;
 
-	public aboutPanel() {
+	public AboutPanel() {
         JTextPane aboutTextPane = new JTextPane();
         aboutTextPane.setEditable(false);
         
