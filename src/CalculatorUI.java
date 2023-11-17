@@ -41,10 +41,10 @@ public class CalculatorUI extends JFrame {
 	// Convert HTML color string to a Color object
     // I stole these colors from the windows calculator lol
     Color bgColor = Color.decode("#f3f3f3");
-    Color equalBgColor = Color.decode("#695b2e");
+    Color equalBgColor = Color.decode("#6ddcdb");
     Color buttonBgColor = Color.decode("#f9f9f9");
     Color darkBgColor = Color.decode("#202020");
-    Color darkEqualBgColor = Color.decode("#cac585");
+    Color darkEqualBgColor = Color.decode("#d8b597");
     Color darkNumberBgColor = Color.decode("#3b3b3b");
     Color darkButtonBgColor = Color.decode("#323232");
     Color darkTextColor = Color.decode("#e1e1e1");
@@ -57,6 +57,7 @@ public class CalculatorUI extends JFrame {
         setTitle("NumCruncher - A scientific calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(450, 550);
+        setMinimumSize(new Dimension(450, 550));
         setLocationRelativeTo(null);       
 
         initializeResultField();
@@ -90,7 +91,10 @@ public class CalculatorUI extends JFrame {
         // Create radio button menu items
         JRadioButtonMenuItem lightMode = new JRadioButtonMenuItem("Light Mode");
         JRadioButtonMenuItem darkMode = new JRadioButtonMenuItem("Dark Mode");
-
+        
+        //Set light mode as default
+        lightMode.setSelected(true);
+        
         // Group the radio buttons
         ButtonGroup group = new ButtonGroup();
         group.add(lightMode);
