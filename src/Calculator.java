@@ -5,9 +5,21 @@ import java.awt.event.ActionListener;
 
 public class Calculator extends JFrame implements ActionListener {
 	/**
-	 * Brendan LeGrand, CSCI 3300 - Term Project
-	 * Main calculator method
+	 * Main Calculator Class - NumCruncher Application
+	 * Developed by Brendan LeGrand for CSCI 3300 - Term Project.
+	 *
+	 * This class serves as the main entry point for the NumCruncher calculator application.
+	 * It integrates the user interface components and logic, and sets up the primary JFrame window.
+	 * Features include basic arithmetic operations, a user-friendly interface, and helpful tooltips.
+	 * 
+	 * Usage:
+	 * - Instantiate this class to start the application.
+	 * - Use the graphical interface for performing calculations.
+	 * - Refer to the FAQ in the help center for detailed operating instructions.
+	 *
+	 * Note: This class depends on CalculatorUI and CalculatorLogic for its operations.
 	 */
+
 	private static final long serialVersionUID = 4519143440307608770L;    
     
     CalculatorUI UI = new CalculatorUI();

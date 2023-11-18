@@ -2,9 +2,27 @@ import javax.swing.JOptionPane;
 
 public class CalculatorLogic {
 	/**
-	 * Brendan LeGrand, CSCI 3300 - Term Project
-	 * Calculator Logic class
+	 * CalculatorLogic Class - Core Logic for NumCruncher Application
+	 * Developed by Brendan LeGrand for CSCI 3300 - Term Project.
+	 *
+	 * This class is responsible for implementing the core logic behind the NumCruncher calculator application.
+	 * It handles arithmetic operations, manages state and data related to calculations, and interacts with the CalculatorUI
+	 * class to reflect updates in the user interface.
+	 *
+	 * Key Features:
+	 * - Basic arithmetic operations like addition, subtraction, multiplication, and division.
+	 * - Support for handling decimal inputs and arithmetic.
+	 * - Maintains the state of current calculations and updates the UI accordingly.
+	 * - Works in tandem with CalculatorUI for an interactive user experience.
+	 *
+	 * Usage:
+	 * - This class is instantiated within the Calculator class.
+	 * - It receives input from the UI and processes the logic of the calculator.
+	 * 
+	 * Dependencies:
+	 * - Relies on CalculatorUI for displaying results and Calculator for overall orchestration.
 	 */
+
     private String currentInput = "";
     private double num1;
     private double num2;

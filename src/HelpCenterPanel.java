@@ -1,10 +1,24 @@
 import javax.swing.*;
 
 public class HelpCenterPanel extends JPanel {
-    /**
-	 * Brendan LeGrand, CSCI 3300 - Term Project
-	 * Help Panel
+	/**
+	 * HelpCenterPanel Class - Help and FAQ Panel for NumCruncher Application
+	 * Developed by Brendan LeGrand for CSCI 3300 - Term Project.
+	 *
+	 * This class provides a help and FAQ panel for the NumCruncher calculator application. It is designed to offer users
+	 * guidance on how to use the application, with a focus on accessibility and ease of understanding. The panel uses a
+	 * JTextPane to display formatted text, including HTML content for structured presentation.
+	 *
+	 * Features:
+	 * - Detailed FAQ and help guidelines for users of the NumCruncher application.
+	 * - Uses HTML content for structured and formatted text presentation.
+	 * - Easy to navigate and user-friendly interface.
+	 *
+	 * Usage:
+	 * - This panel is accessible from the main application window and provides users with helpful information
+	 *   about using the application effectively.
 	 */
+
 	private static final long serialVersionUID = -6578036529732131603L;
 
 	public HelpCenterPanel() {

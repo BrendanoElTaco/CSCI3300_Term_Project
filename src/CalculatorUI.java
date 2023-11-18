@@ -5,9 +5,23 @@ import java.awt.event.ActionEvent;
 
 public class CalculatorUI extends JFrame {
 	/**
-	 * Brendan LeGrand, CSCI 3300 - Term Project
-	 * Caculator UI
+	 * CalculatorUI Class - User Interface for NumCruncher Application
+	 * Developed by Brendan LeGrand for CSCI 3300 - Term Project.
+	 *
+	 * This class is responsible for creating and managing the user interface of the NumCruncher calculator application.
+	 * It includes elements such as buttons for digits and operations, a display field for results, and additional
+	 * functionality like trigonometric operations and a sign toggle.
+	 *
+	 * Features:
+	 * - Numeric and operation buttons for performing calculations.
+	 * - A result field to display current inputs and calculation results.
+	 * - Additional features like trigonometric functions and toggle buttons.
+	 *
+	 * Usage:
+	 * - Instantiate this class in the Calculator class to create the UI.
+	 * - Interacts with CalculatorLogic to perform calculations based on user input.
 	 */
+
 	private static final long serialVersionUID = 5294493750822072072L;
 	public JTextField resultField;
     public JButton[] numButtons;

@@ -5,10 +5,23 @@ import java.awt.Desktop;
 import java.net.URI;
 
 public class AboutPanel extends JPanel {
-    /**
-	 * Brendan LeGrand, CSCI 3300 - Term Project
-	 * About Panel
+	/**
+	 * AboutPanel Class - Information Panel for NumCruncher Application
+	 * Developed by Brendan LeGrand for CSCI 3300 - Term Project.
+	 *
+	 * This class represents an informational panel that is part of the NumCruncher calculator application.
+	 * It provides details about the application, such as version information, developer credits, and other relevant
+	 * acknowledgements. The panel uses a JTextPane to display formatted text and hyperlinks.
+	 *
+	 * Features:
+	 * - Displays information about the NumCruncher application.
+	 * - Contains hyperlinks to relevant resources or external websites.
+	 * - Utilizes Swing components for a consistent look and feel with the rest of the application.
+	 *
+	 * Usage:
+	 * - This panel can be accessed from the main application window to provide users with additional information.
 	 */
+
 	private static final long serialVersionUID = -6578036529732131603L;
 
 	public AboutPanel() {
