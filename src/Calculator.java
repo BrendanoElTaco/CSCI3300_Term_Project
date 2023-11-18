@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 public class Calculator extends JFrame implements ActionListener {
 	/**
 	 * Brendan LeGrand, CSCI 3300 - Term Project
-	 * Main calculator method and logic
+	 * Main calculator method
 	 */
 	private static final long serialVersionUID = 4519143440307608770L;    
     
     CalculatorUI UI = new CalculatorUI();
-    CalculatorLogic logic = new CalculatorLogic(UI);
+    CalculatorLogic logic = new CalculatorLogic(UI, this);
     
     public Calculator() {
         UI.initializeUI(this);

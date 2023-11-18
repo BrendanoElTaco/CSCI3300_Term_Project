@@ -1,7 +1,10 @@
 import javax.swing.JOptionPane;
 
 public class CalculatorLogic {
-	
+	/**
+	 * Brendan LeGrand, CSCI 3300 - Term Project
+	 * Calculator Logic class
+	 */
     private String currentInput = "";
     private double num1;
     private double num2;
@@ -11,9 +14,11 @@ public class CalculatorLogic {
     private boolean isSecondaryMode = false;
     
     private CalculatorUI UI;
+    private Calculator calculator;
     
-    public CalculatorLogic(CalculatorUI UI) {
+    public CalculatorLogic(CalculatorUI UI, Calculator calculator) {
         this.UI = UI;
+        this.calculator = calculator;
     }
 	
     public void handleNumericButton(String buttonText) {
@@ -180,7 +185,7 @@ public class CalculatorLogic {
 		
 		if (isSecondaryMode) {
 			if (num < 0) {
-                JOptionPane.showMessageDialog(this, "Error: Cannot Cube-root a negative number", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(calculator, "Error: Cannot Cube-root a negative number", "Error", JOptionPane.ERROR_MESSAGE);
                 currentInput = "";
 				newInput = true;
             } else {
@@ -193,7 +198,7 @@ public class CalculatorLogic {
 		} else {
 			// Don't sqrt negative
             if (num < 0) {
-                JOptionPane.showMessageDialog(this, "Error: Cannot Square-root a negative number", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(calculator, "Error: Cannot Square-root a negative number", "Error", JOptionPane.ERROR_MESSAGE);
                 currentInput = "";
 				newInput = true;
             } else {
@@ -218,7 +223,7 @@ public class CalculatorLogic {
 	            double base = Double.parseDouble(baseInput);
 	            
 	            if (base <= 0 || base == 1) {
-	                JOptionPane.showMessageDialog(this, "Invalid base (y) for logarithm", "Error", JOptionPane.ERROR_MESSAGE);
+	                JOptionPane.showMessageDialog(calculator, "Invalid base (y) for logarithm", "Error", JOptionPane.ERROR_MESSAGE);
 	            } else {
 	                // Calculate the logarithm (log base y of x)
 	                result = Math.log(num) / Math.log(base);
@@ -247,7 +252,7 @@ public class CalculatorLogic {
 		//LN
 		} else {
 			if (num < 0) {
-                JOptionPane.showMessageDialog(this, "Invalid number for logarithm", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(calculator, "Invalid number for logarithm", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
 			result = Math.log(num);
 			UI.getResultField().setText(String.valueOf(result));
@@ -386,7 +391,7 @@ public class CalculatorLogic {
 	        case "÷":
 	            // Don't divide by zero
 	            if (num2 == 0) {
-	                JOptionPane.showMessageDialog(this, "Error: Division by zero", "Error", JOptionPane.ERROR_MESSAGE);
+	                JOptionPane.showMessageDialog(calculator, "Error: Division by zero", "Error", JOptionPane.ERROR_MESSAGE);
 	                return 0.0;
 	            }
 	            return num1 / num2;
@@ -397,12 +402,12 @@ public class CalculatorLogic {
 	        case "%":
 	        	// Don't module by zero
 	            if (num2 == 0) {
-	                JOptionPane.showMessageDialog(this, "Error: Cannot use zero with a modulo operation", "Error", JOptionPane.ERROR_MESSAGE);
+	                JOptionPane.showMessageDialog(calculator, "Error: Cannot use zero with a modulo operation", "Error", JOptionPane.ERROR_MESSAGE);
 	                return 0.0;
 	            }
 	            return num1 % num2;
 	        default:
-	            JOptionPane.showMessageDialog(this, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
+	            JOptionPane.showMessageDialog(calculator, "Error: Something broke - No operator selected", "Error", JOptionPane.ERROR_MESSAGE);
 	            return 0.0;
 		}
 	}
