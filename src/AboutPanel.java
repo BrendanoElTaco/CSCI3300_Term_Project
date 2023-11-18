@@ -31,20 +31,47 @@ public class AboutPanel extends JPanel {
         aboutTextPane.setContentType("text/html"); // Enable HTML content
 
         // Define the HTML with the hyperlink
-        String htmlString = "<html><body><style>" 
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><strong><span style=\"font-size:12px;\">Version</span></strong><span style=\"font-size:12px;\">: 1.0.1</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">Developed by Brendan LeGrand</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">For more information, visit my <a href=\"https://github.com/BrendanoElTaco/CSCI3300_Term_Project\">GitHub</a></span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">NumCruncher is a user-friendly calculator designed to perform basic arithmetic operations, trigonometric calculations, and more.</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">It was developed as a part of a term project for my software development class.</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">If you find any bugs, please submit a bug report on <a href=\\\"https://github.com/BrendanoElTaco/CSCI3300_Term_Project\\\">GitHub</a>.</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">&nbsp;</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><strong><span style=\"font-size:12px;\">Credits</span></strong><span style=\"font-size:12px;\">:</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">- Special thanks to Michael McLeod, MBT for teaching this class, and StackOverflow for saving my sanity.</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">&nbsp;</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><strong><span style=\"font-size:12px;\">Disclaimer</span></strong><span style=\"font-size:12px;\">:</span></p>\r\n"
-        					+ "<p style='font-family:\"Calibri\",sans-serif;'><span style=\"font-size:12px;\">- NumCruncher is provided &quot;as is&quot; for educational purposes and is not intended for professional use.</span></p>\r\n"
-                            + "</body></html>";
+        String htmlString = """
+        		<html>
+        		<head>
+				    <style>
+				        body {
+				            font-family: 'Calibri', sans-serif;
+				            font-size: 12px;
+				        }
+				        p {
+				            margin-bottom: 10px; /* Adjust as needed */
+				        }
+				        a {
+				            color: blue; /* Style for links */
+				            text-decoration: none; /* Remove underline from links */
+				        }
+				        a:hover {
+				            text-decoration: underline; /* Underline on hover for links */
+				        }
+				        strong {
+				            /* Additional styles for strong text if needed */
+				        }
+				        /* Add more selectors and styles as needed */
+				    </style>
+				</head>
+				<body>
+				    <p><strong>Version:</strong> 1.0.1</p>
+				    <p>Developed by Brendan LeGrand</p>
+				    <p>For more information, visit my <a href="https://github.com/BrendanoElTaco/CSCI3300_Term_Project">GitHub</a></p>
+				    <p>NumCruncher is a user-friendly calculator designed to perform basic arithmetic operations, trigonometric calculations, and more.</p>
+				    <p>It was developed as a part of a term project for my software development class.</p>
+				    <p>If you find any bugs, please submit a bug report on <a href="https://github.com/BrendanoElTaco/CSCI3300_Term_Project">GitHub</a>.</p>
+				    <p>&nbsp;</p>
+				    <p><strong>Credits:</strong></p>
+				    <p>- Special thanks to Michael McLeod, MBT for teaching this class, and StackOverflow for saving my sanity.</p>
+				    <p>&nbsp;</p>
+				    <p><strong>Disclaimer:</strong></p>
+				    <p>- NumCruncher is provided "as is" for educational purposes and is not intended for professional use.</p>
+<				</body>
+<<				/html>
+
+        		""";
         aboutTextPane.setText(htmlString);
 
         // Add a hyperlink listener
