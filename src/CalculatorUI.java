@@ -2,6 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class CalculatorUI extends JFrame {
 	/**
@@ -181,7 +183,7 @@ public class CalculatorUI extends JFrame {
     private void initializeNumberButtons() {
         numButtons = new JButton[10];
         for (int i = 0; i < 10; i++) {
-            numButtons[i] = calculator.createButton(String.valueOf(i), BUTTON_FONT);
+            numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
             numButtons[i].setBackground(buttonBgColor);
         }
     }
@@ -190,34 +192,34 @@ public class CalculatorUI extends JFrame {
         operationButtons = new JButton[4];
         String[] operations = { "+", "-", "\u00d7", "\u00f7" };
         for (int i = 0; i < 4; i++) {
-            operationButtons[i] = calculator.createButton(operations[i], BUTTON_FONT);
+            operationButtons[i] = createButton(operations[i], BUTTON_FONT);
             operationButtons[i].setBackground(buttonBgColor);
         }
     }
 
     private void initializeFunctionButtons() {
-    	calculateButton = calculator.createButton("=", BUTTON_FONT);
+    	calculateButton = createButton("=", BUTTON_FONT);
     	calculateButton.setBackground(equalBgColor);
-        signToggleButton = calculator.createButton("+/-", BUTTON_FONT);
-        sinButton = calculator.createButton("sin", BUTTON_FONT);
-        cosButton = calculator.createButton("cos", BUTTON_FONT);
-        tanButton = calculator.createButton("tan", BUTTON_FONT);
-        decimalButton = calculator.createButton(".", BUTTON_FONT);
-        powerOfButton = calculator.createButton("xⁿ", BUTTON_FONT);
-        backspaceButton = calculator.createButton("⌫", BUTTON_FONT);
-        ceButton = calculator.createButton("CE", BUTTON_FONT);
-        eulerButton = calculator.createButton("e", BUTTON_FONT);
-        PIButton = calculator.createButton("𝜋", PI_BUTTON_FONT);
-        powerOfTenButton = calculator.createButton("10ˣ", BUTTON_FONT);
-        sqrRootButton = calculator.createButton("√x", BUTTON_FONT);
-        logBaseTenButton = calculator.createButton("log" + "\u2081" + "\u2080", BUTTON_FONT);
-        logBaseEButton = calculator.createButton("LN", BUTTON_FONT);
-        secondaryFunctionButton = calculator.createButton("2nd", BUTTON_FONT);
-        xPowerOf2Button = calculator.createButton("x²", BUTTON_FONT);
-        secButton = calculator.createButton("sec", BUTTON_FONT);
-        cscButton = calculator.createButton("csc", BUTTON_FONT);
-        cotButton = calculator.createButton("cot", BUTTON_FONT);
-        moduloButton = calculator.createButton("%", BUTTON_FONT);
+        signToggleButton = createButton("+/-", BUTTON_FONT);
+        sinButton = createButton("sin", BUTTON_FONT);
+        cosButton = createButton("cos", BUTTON_FONT);
+        tanButton = createButton("tan", BUTTON_FONT);
+        decimalButton = createButton(".", BUTTON_FONT);
+        powerOfButton = createButton("xⁿ", BUTTON_FONT);
+        backspaceButton = createButton("⌫", BUTTON_FONT);
+        ceButton = createButton("CE", BUTTON_FONT);
+        eulerButton = createButton("e", BUTTON_FONT);
+        PIButton = createButton("𝜋", PI_BUTTON_FONT);
+        powerOfTenButton = createButton("10ˣ", BUTTON_FONT);
+        sqrRootButton = createButton("√x", BUTTON_FONT);
+        logBaseTenButton = createButton("log" + "\u2081" + "\u2080", BUTTON_FONT);
+        logBaseEButton = createButton("LN", BUTTON_FONT);
+        secondaryFunctionButton = createButton("2nd", BUTTON_FONT);
+        xPowerOf2Button = createButton("x²", BUTTON_FONT);
+        secButton = createButton("sec", BUTTON_FONT);
+        cscButton = createButton("csc", BUTTON_FONT);
+        cotButton = createButton("cot", BUTTON_FONT);
+        moduloButton = createButton("%", BUTTON_FONT);
     }
 
     private JPanel createButtonPanel() {
@@ -392,6 +394,34 @@ public class CalculatorUI extends JFrame {
         moduloButton.setForeground(null);
         resultField.setForeground(null);
         calculateButton.setForeground(null);
+    }
+    
+    // Create a JButton with the given label and font, and attach an ActionListener
+    public JButton createButton(String label, Font font) {
+        JButton button = new JButton(label);
+        button.addActionListener(calculator);
+        button.setFont(font);
+        button.setBackground(buttonBgColor);
+
+        // Define an action for the button
+        Action buttonAction = new AbstractAction() {
+			private static final long serialVersionUID = -7842048807725338392L;
+
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                button.doClick();
+            }
+        };
+
+        // Assign the action to a key stroke
+        String keyStrokeString = "NUMPAD" + label; // For numpad keys
+        // For top row number keys, use "DIGIT" + label
+
+        // Bind the key stroke to the action
+        button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyStrokeString), "buttonAction" + label);
+        button.getActionMap().put("buttonAction" + label, buttonAction);
+
+        return button;
     }
     
     //Getters

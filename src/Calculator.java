@@ -19,7 +19,6 @@ public class Calculator extends JFrame implements ActionListener {
 	 *
 	 * Note: This class depends on CalculatorUI and CalculatorLogic for its operations.
 	 */
-
 	private static final long serialVersionUID = 4519143440307608770L;    
     
     CalculatorUI UI = new CalculatorUI();
@@ -34,15 +33,6 @@ public class Calculator extends JFrame implements ActionListener {
     Color bgColor = Color.decode("#f3f3f3");
     Color equalBgColor = Color.decode("#695b2e");
     Color buttonBgColor = Color.decode("#f9f9f9");
-    
-    public JButton createButton(String label, Font font) {
-        // Create a JButton with the given label and font, and attach an ActionListener
-        JButton button = new JButton(label);
-        button.addActionListener(this);
-        button.setFont(font);
-        button.setBackground(buttonBgColor);
-        return button;
-    }
     
 	@Override
 	public void actionPerformed(ActionEvent e) {
