@@ -40,6 +40,7 @@ public class CalculatorLogic {
     }
 	
     public void handleNumericButton(String buttonText) {
+    	System.out.println("The " + buttonText + " key was pressed");
         if (newInput) {
             currentInput = buttonText;
             newInput = false;
@@ -50,6 +51,7 @@ public class CalculatorLogic {
     }
 
     public void handleArithmeticOperator(String buttonText) {
+    	System.out.println("The " + buttonText + " key was pressed");
     	if (!currentInput.isEmpty()) {
 			if (num1 == 0) {
 				num1 = Double.parseDouble(currentInput);
@@ -64,6 +66,7 @@ public class CalculatorLogic {
     }
     
     public void handleEqualsButton(String buttonText) {
+    	System.out.println("The " + buttonText + " key was pressed");
     	if (!currentInput.isEmpty()) {
 			num2 = Double.parseDouble(currentInput);
 			num1 = performOperation(num1, num2, selectedOperation);
@@ -76,6 +79,7 @@ public class CalculatorLogic {
     
     public void handleToggleSignButton(String buttonText) {
     	// Toggle the sign (positive/negative) of the current input
+    	System.out.println("The " + buttonText + " key was pressed");
 		isPositive = !isPositive;
 		if (!currentInput.isEmpty() && !currentInput.equals("0")) {
 			double input = Double.parseDouble(currentInput);

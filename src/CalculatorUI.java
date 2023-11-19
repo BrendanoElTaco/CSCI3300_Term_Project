@@ -180,13 +180,33 @@ public class CalculatorUI extends JFrame {
         resultField.setHorizontalAlignment(JTextField.RIGHT);
     }
 
-    private void initializeNumberButtons() {
-        numButtons = new JButton[10];
-        for (int i = 0; i < 10; i++) {
-            numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
-            numButtons[i].setBackground(buttonBgColor);
-        }
-    }
+	private void initializeNumberButtons() {
+	    numButtons = new JButton[10];
+	    for (int i = 0; i < 10; i++) {
+	        numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
+	        numButtons[i].setBackground(buttonBgColor);
+
+	        // Set up key bindings
+	        final int index = i; // Final variable for use in the inner class
+	        Action buttonAction = new AbstractAction() {
+	            /**
+				 * 
+				 */
+				private static final long serialVersionUID = -6882255852797277539L;
+
+				@Override
+	            public void actionPerformed(ActionEvent e) {
+	                numButtons[index].doClick();
+	            }
+	        };
+
+	        // Bind the action to the key stroke
+	        String keyStrokeString = "NUMPAD" + i;
+	        numButtons[i].getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyStrokeString), "numButtonAction" + i);
+	        numButtons[i].getActionMap().put("numButtonAction" + i, buttonAction);
+	    }
+	}
+
 
     private void initializeOperationButtons() {
         operationButtons = new JButton[4];
@@ -194,6 +214,39 @@ public class CalculatorUI extends JFrame {
         for (int i = 0; i < 4; i++) {
             operationButtons[i] = createButton(operations[i], BUTTON_FONT);
             operationButtons[i].setBackground(buttonBgColor);
+
+            final int index = i; // Final variable for use in the inner class
+            String keyStrokeString = null;
+            switch (operations[i]) {
+                case "+":
+                    keyStrokeString = "typed +";
+                    break;
+                case "-":
+                    keyStrokeString = "typed -";
+                    break;
+                case "\u00D7": // Multiplication symbol
+                    keyStrokeString = "typed *";
+                    break;
+                case "\u00F7": // Division symbol
+                    keyStrokeString = "typed /";
+                    break;
+            }
+
+            if (keyStrokeString != null) {
+                Action buttonAction = new AbstractAction() {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 2148409691772429197L;
+
+					@Override
+                    public void actionPerformed(ActionEvent e) {
+                        operationButtons[index].doClick();
+                    }
+                };
+                operationButtons[i].getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyStrokeString), "buttonAction" + operations[i]);
+                operationButtons[i].getActionMap().put("buttonAction" + operations[i], buttonAction);
+            }
         }
     }
 
@@ -207,6 +260,7 @@ public class CalculatorUI extends JFrame {
         decimalButton = createButton(".", BUTTON_FONT);
         powerOfButton = createButton("xⁿ", BUTTON_FONT);
         backspaceButton = createButton("⌫", BUTTON_FONT);
+        backspaceButton.setBackground(buttonBgColor);        
         ceButton = createButton("CE", BUTTON_FONT);
         eulerButton = createButton("e", BUTTON_FONT);
         PIButton = createButton("𝜋", PI_BUTTON_FONT);
@@ -220,6 +274,9 @@ public class CalculatorUI extends JFrame {
         cscButton = createButton("csc", BUTTON_FONT);
         cotButton = createButton("cot", BUTTON_FONT);
         moduloButton = createButton("%", BUTTON_FONT);
+        
+        //Setup global keybinds
+        setupGlobalKeyBindings();
     }
 
     private JPanel createButtonPanel() {
@@ -402,26 +459,51 @@ public class CalculatorUI extends JFrame {
         button.addActionListener(calculator);
         button.setFont(font);
         button.setBackground(buttonBgColor);
+        return button;
+    }
 
-        // Define an action for the button
-        Action buttonAction = new AbstractAction() {
-			private static final long serialVersionUID = -7842048807725338392L;
+    private void setupGlobalKeyBindings() {
+        JRootPane rootPane = getRootPane();
+
+        // Calculate button key binding
+        Action calculateAction = new AbstractAction() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6480782933526186928L;
 
 			@Override
             public void actionPerformed(ActionEvent e) {
-                button.doClick();
+                calculateButton.doClick();
             }
         };
+        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "calculateAction");
+        rootPane.getActionMap().put("calculateAction", calculateAction);
 
-        // Assign the action to a key stroke
-        String keyStrokeString = "NUMPAD" + label; // For numpad keys
-        // For top row number keys, use "DIGIT" + label
+        // Backspace button key binding
+        Action backspaceAction = new AbstractAction() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -35053961687699818L;
 
-        // Bind the key stroke to the action
-        button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyStrokeString), "buttonAction" + label);
-        button.getActionMap().put("buttonAction" + label, buttonAction);
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                backspaceButton.doClick();
+            }
+        };
+        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "backspaceAction");
+        rootPane.getActionMap().put("backspaceAction", backspaceAction);
 
-        return button;
+        // Clear button key binding
+        /*Action clearAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	ceButton.doClick();
+            }
+        };
+        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "clearAction");
+        rootPane.getActionMap().put("clearAction", clearAction);*/
     }
     
     //Getters
