@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -103,6 +104,8 @@ public class CalculatorUI extends JFrame {
         
         // Make the frame visible
         setVisible(true);
+        
+        registerGlobalKeyEventListener();
     }
     
     private void initializeMenuBar() {
@@ -194,70 +197,18 @@ public class CalculatorUI extends JFrame {
 	    for (int i = 0; i < 10; i++) {
 	        numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
 	        numButtons[i].setBackground(buttonBgColor);
-
-	        // Set up key bindings
-	        final int index = i; // Final variable for use in the inner class
-	        Action buttonAction = new AbstractAction() {
-	            /**
-				 * 
-				 */
-				private static final long serialVersionUID = -6882255852797277539L;
-
-				@Override
-	            public void actionPerformed(ActionEvent e) {
-	                numButtons[index].doClick();
-	            }
-	        };
-
-	        // Bind the action to the key stroke
-	        String keyStrokeString = "NUMPAD" + i;
-	        numButtons[i].getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyStrokeString), "numButtonAction" + i);
-	        numButtons[i].getActionMap().put("numButtonAction" + i, buttonAction);
 	    }
 	}
 
+	private void initializeOperationButtons() {
+	    operationButtons = new JButton[4];
+	    String[] operations = { "+", "-", "\u00d7", "\u00f7" };
+	    for (int i = 0; i < 4; i++) {
+	        operationButtons[i] = createButton(operations[i], BUTTON_FONT);
+	        operationButtons[i].setBackground(buttonBgColor);
+	    }
+	}
 
-    private void initializeOperationButtons() {
-        operationButtons = new JButton[4];
-        String[] operations = { "+", "-", "\u00d7", "\u00f7" };
-        for (int i = 0; i < 4; i++) {
-            operationButtons[i] = createButton(operations[i], BUTTON_FONT);
-            operationButtons[i].setBackground(buttonBgColor);
-
-            final int index = i; // Final variable for use in the inner class
-            String keyStrokeString = null;
-            switch (operations[i]) {
-                case "+":
-                    keyStrokeString = "typed +";
-                    break;
-                case "-":
-                    keyStrokeString = "typed -";
-                    break;
-                case "\u00D7": // Multiplication symbol
-                    keyStrokeString = "typed *";
-                    break;
-                case "\u00F7": // Division symbol
-                    keyStrokeString = "typed /";
-                    break;
-            }
-
-            if (keyStrokeString != null) {
-                Action buttonAction = new AbstractAction() {
-                    /**
-					 * 
-					 */
-					private static final long serialVersionUID = 2148409691772429197L;
-
-					@Override
-                    public void actionPerformed(ActionEvent e) {
-                        operationButtons[index].doClick();
-                    }
-                };
-                operationButtons[i].getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(keyStrokeString), "buttonAction" + operations[i]);
-                operationButtons[i].getActionMap().put("buttonAction" + operations[i], buttonAction);
-            }
-        }
-    }
 
     private void initializeFunctionButtons() {
     	calculateButton = createButton("=", BUTTON_FONT);
@@ -283,9 +234,6 @@ public class CalculatorUI extends JFrame {
         cscButton = createButton("csc", BUTTON_FONT);
         cotButton = createButton("cot", BUTTON_FONT);
         moduloButton = createButton("%", BUTTON_FONT);
-        
-        //Setup global keybinds
-        setupGlobalKeyBindings();
     }
 
     private JPanel createButtonPanel() {
@@ -471,53 +419,64 @@ public class CalculatorUI extends JFrame {
         return button;
     }
 
-    private void setupGlobalKeyBindings() {
-        JRootPane rootPane = getRootPane();
+ // Global method to handle key events
+    private void handleGlobalKeyEvents(AWTEvent event) {
+        if (event instanceof KeyEvent) {
+            KeyEvent ke = (KeyEvent) event;
+            if (ke.getID() == KeyEvent.KEY_PRESSED) {
+                int key = ke.getKeyCode();
 
-        // Calculate button key binding
-        Action calculateAction = new AbstractAction() {
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = 6480782933526186928L;
+                // Check for top row number key presses
+                if (key >= KeyEvent.VK_0 && key <= KeyEvent.VK_9) {
+                    int index = key - KeyEvent.VK_0;
+                    numButtons[index].doClick();
+                }
 
-			@Override
-            public void actionPerformed(ActionEvent e) {
-                calculateButton.doClick();
+                // Check for numpad number key presses
+                if (key >= KeyEvent.VK_NUMPAD0 && key <= KeyEvent.VK_NUMPAD9) {
+                    int index = key - KeyEvent.VK_NUMPAD0;
+                    numButtons[index].doClick();
+                }
+
+                // Check for operation key presses
+                switch (key) {
+                    case KeyEvent.VK_ADD:
+                        operationButtons[0].doClick(); // Assuming '+' is at index 0
+                        break;
+                    case KeyEvent.VK_SUBTRACT:
+                        operationButtons[1].doClick(); // Assuming '-' is at index 1
+                        break;
+                    case KeyEvent.VK_MULTIPLY:
+                        operationButtons[2].doClick(); // Assuming '*' is at index 2
+                        break;
+                    case KeyEvent.VK_DIVIDE:
+                        operationButtons[3].doClick(); // Assuming '/' is at index 3
+                        break;
+                    // Additional keys from setupGlobalKeyBindings
+                    case KeyEvent.VK_ENTER:
+                        calculateButton.doClick();
+                        break;
+                    case KeyEvent.VK_BACK_SPACE:
+                    	ke.consume();  // Stop windows sound playing when pressed
+                        backspaceButton.doClick();
+                        break;
+                    case KeyEvent.VK_DELETE:
+                    	ke.consume();  // Stop windows sound playing when pressed
+                        ceButton.doClick();
+                        break;
+                }
+            }
+        }
+    }
+
+    // Method to register the global event listener
+    public void registerGlobalKeyEventListener() {
+        AWTEventListener listener = new AWTEventListener() {
+            public void eventDispatched(AWTEvent event) {
+                handleGlobalKeyEvents(event);
             }
         };
-        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "calculateAction");
-        rootPane.getActionMap().put("calculateAction", calculateAction);
-
-        // Backspace button key binding
-        Action backspaceAction = new AbstractAction() {
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = -35053961687699818L;
-
-			@Override
-            public void actionPerformed(ActionEvent e) {
-                backspaceButton.doClick();
-            }
-        };
-        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "backspaceAction");
-        rootPane.getActionMap().put("backspaceAction", backspaceAction);
-
-        // Clear button key binding
-        Action clearAction = new AbstractAction() {
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = -7789423252126159985L;
-
-			@Override
-            public void actionPerformed(ActionEvent e) {
-            	ceButton.doClick();
-            }
-        };
-        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "clearAction");
-        rootPane.getActionMap().put("clearAction", clearAction);
+        Toolkit.getDefaultToolkit().addAWTEventListener(listener, AWTEvent.KEY_EVENT_MASK);
     }
     
     //Getters
