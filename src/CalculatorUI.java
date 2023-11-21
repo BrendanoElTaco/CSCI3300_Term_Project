@@ -18,9 +18,16 @@ public class CalculatorUI extends JFrame {
 	 * - A result field to display current inputs and calculation results.
 	 * - Additional features like trigonometric functions and toggle buttons.
 	 *
+	 * Key Bindings:
+	 * - Numeric keys (0-9) for entering digits.
+	 * - Enter key for equals operation.
+	 * - Backspace key for deleting a single character.
+	 * - Escape key for clearing the current input.
+	 * - Plus, minus, multiply, and divide keys for respective operations.
+	 *
 	 * Usage:
 	 * - Instantiate this class in the Calculator class to create the UI.
-	 * - Interacts with CalculatorLogic to perform calculations based on user input.
+	 * - Interacts with CalculatorLogic to perform calculations based on user inputs and button clicks.
 	 */
 
 	private static final long serialVersionUID = 5294493750822072072L;
@@ -51,6 +58,7 @@ public class CalculatorUI extends JFrame {
 	
     //Fonts
     private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
+    //Unicode PI is small, so big font
     private final Font PI_BUTTON_FONT = new Font("SansSerif", Font.BOLD, 30);
     
 	// Convert HTML color string to a Color object
@@ -70,6 +78,7 @@ public class CalculatorUI extends JFrame {
     public void initializeUI(Calculator calc) {
         this.calculator = calc;
         setTitle("NumCruncher - A scientific calculator");
+		// Ensuring the application exits when the window is closed												   
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(450, 550);
         setMinimumSize(new Dimension(450, 550));
@@ -83,6 +92,7 @@ public class CalculatorUI extends JFrame {
 
         // Create the main panel to hold the result field and button panel
         mainPanel = new JPanel();
+		// Setting the layout of the CalculatorUI to BorderLayout for organized component arrangement																					 
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(resultField, BorderLayout.NORTH);
         mainPanel.add(createButtonPanel(), BorderLayout.CENTER);
@@ -495,14 +505,19 @@ public class CalculatorUI extends JFrame {
         rootPane.getActionMap().put("backspaceAction", backspaceAction);
 
         // Clear button key binding
-        /*Action clearAction = new AbstractAction() {
-            @Override
+        Action clearAction = new AbstractAction() {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7789423252126159985L;
+
+			@Override
             public void actionPerformed(ActionEvent e) {
             	ceButton.doClick();
             }
         };
-        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "clearAction");
-        rootPane.getActionMap().put("clearAction", clearAction);*/
+        rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "clearAction");
+        rootPane.getActionMap().put("clearAction", clearAction);
     }
     
     //Getters
