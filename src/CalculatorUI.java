@@ -4,6 +4,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.AudioInputStream;
+import java.io.File;
+import java.util.Random;
 
 public class CalculatorUI extends JFrame {
 	/**
@@ -56,6 +62,9 @@ public class CalculatorUI extends JFrame {
     public JButton moduloButton;
     
     private JPanel mainPanel;
+    
+    private String[] soundFiles = {"sounds/key1.wav", "sounds/key2.wav", "sounds/key3.wav"};
+    private Random random = new Random();
 	
     //Fonts
     private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
@@ -140,6 +149,35 @@ public class CalculatorUI extends JFrame {
         darkMode.addActionListener(e -> {
             setDarkMode();
         });
+        
+        // Create the "Sound" menu
+        JMenu soundMenu = new JMenu("Sound");
+        menuBar.add(soundMenu);
+
+        // Create radio button menu items
+        JRadioButtonMenuItem soundOn = new JRadioButtonMenuItem("On");
+        JRadioButtonMenuItem soundOff = new JRadioButtonMenuItem("Off");
+        
+        //Set sound on as default
+        soundOn.setSelected(true);
+        
+        // Group the radio buttons
+        ButtonGroup soundGroup = new ButtonGroup();
+        soundGroup.add(soundOn);
+        soundGroup.add(soundOff);
+
+        // Add radio buttons to the menu
+        soundMenu.add(soundOn);
+        soundMenu.add(soundOff);
+
+        // Action listeners
+        soundOn.addActionListener(e -> {
+        	unmuteSound();
+        });
+        
+        soundOff.addActionListener(e -> {
+            muteSound();
+        });
 
         //Create the help menu
         JMenu helpMenu = new JMenu("Help");
@@ -197,6 +235,11 @@ public class CalculatorUI extends JFrame {
 	    for (int i = 0; i < 10; i++) {
 	        numButtons[i] = createButton(String.valueOf(i), BUTTON_FONT);
 	        numButtons[i].setBackground(buttonBgColor);
+	        numButtons[i].addActionListener(e -> {
+	            // Select a random sound file
+	            String randomSoundFile = soundFiles[random.nextInt(soundFiles.length)];
+	            playSound(randomSoundFile);
+	        });
 	    }
 	}
 
@@ -213,6 +256,7 @@ public class CalculatorUI extends JFrame {
     private void initializeFunctionButtons() {
     	calculateButton = createButton("=", BUTTON_FONT);
     	calculateButton.setBackground(equalBgColor);
+    	calculateButton.addActionListener(e -> playSound("sounds/enter.wav"));
         signToggleButton = createButton("+/-", BUTTON_FONT);
         sinButton = createButton("sin", BUTTON_FONT);
         cosButton = createButton("cos", BUTTON_FONT);
@@ -220,7 +264,8 @@ public class CalculatorUI extends JFrame {
         decimalButton = createButton(".", BUTTON_FONT);
         powerOfButton = createButton("xⁿ", BUTTON_FONT);
         backspaceButton = createButton("⌫", BUTTON_FONT);
-        backspaceButton.setBackground(buttonBgColor);        
+        backspaceButton.setBackground(buttonBgColor);  
+        backspaceButton.addActionListener(e -> playSound("sounds/Backspacecut.wav"));
         ceButton = createButton("CE", BUTTON_FONT);
         eulerButton = createButton("e", BUTTON_FONT);
         PIButton = createButton("𝜋", PI_BUTTON_FONT);
@@ -419,7 +464,7 @@ public class CalculatorUI extends JFrame {
         return button;
     }
 
- // Global method to handle key events
+	// Global method to handle key events
     private void handleGlobalKeyEvents(AWTEvent event) {
         if (event instanceof KeyEvent) {
             KeyEvent ke = (KeyEvent) event;
@@ -477,6 +522,42 @@ public class CalculatorUI extends JFrame {
             }
         };
         Toolkit.getDefaultToolkit().addAWTEventListener(listener, AWTEvent.KEY_EVENT_MASK);
+    }
+    
+    private boolean isMuted = false;
+    private float savedVolume = 0.0f; // Default volume level
+    
+    private void playSound(String soundFileName) {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundFileName).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+
+            if (isMuted) {
+                // Mute the sound
+                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(gainControl.getMinimum());
+            } else {
+                // Set to saved volume
+                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(savedVolume);
+            }
+
+            clip.start();
+        } catch(Exception e) {
+            System.out.println("Error with playing sound.");
+            e.printStackTrace();
+        }
+    }
+
+    // Method to mute the sound
+    public void muteSound() {
+        isMuted = true;
+    }
+
+    // Method to unmute the sound
+    public void unmuteSound() {
+        isMuted = false;
     }
     
     //Getters
