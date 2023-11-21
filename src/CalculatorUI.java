@@ -249,6 +249,11 @@ public class CalculatorUI extends JFrame {
 	    for (int i = 0; i < 4; i++) {
 	        operationButtons[i] = createButton(operations[i], BUTTON_FONT);
 	        operationButtons[i].setBackground(buttonBgColor);
+	        operationButtons[i].addActionListener(e -> {
+	            // Select a random sound file
+	            String randomSoundFile = soundFiles[random.nextInt(soundFiles.length)];
+	            playSound(randomSoundFile);
+	        });
 	    }
 	}
 
