@@ -72,7 +72,7 @@ public class CalculatorUI extends JFrame {
     private final Font PI_BUTTON_FONT = new Font("SansSerif", Font.BOLD, 30);
     
 	// Convert HTML color string to a Color object
-    // I stole these colors from the windows calculator lol
+    // I stole these colors from the windows calculator
     Color bgColor = Color.decode("#f3f3f3");
     Color equalBgColor = Color.decode("#6ddcdb");
     Color buttonBgColor = Color.decode("#f9f9f9");
@@ -153,6 +153,10 @@ public class CalculatorUI extends JFrame {
         // Create the "Sound" menu
         JMenu soundMenu = new JMenu("Sound");
         menuBar.add(soundMenu);
+        
+        // Add the "Volume Control" menu item to the "Sound" menu
+        JMenuItem volumeControl = new JMenuItem("Volume Control");
+        soundMenu.add(volumeControl);
 
         // Create radio button menu items
         JRadioButtonMenuItem soundOn = new JRadioButtonMenuItem("On");
@@ -179,6 +183,26 @@ public class CalculatorUI extends JFrame {
             muteSound();
         });
 
+        // Action listener to open the volume control
+        volumeControl.addActionListener(e -> {
+            JSlider volumeSlider = new JSlider(JSlider.VERTICAL, 0, 100, 100); // min, max, initial value
+            volumeSlider.setMajorTickSpacing(10);
+            volumeSlider.setPaintTicks(true);
+            volumeSlider.setPaintLabels(true);
+
+            volumeSlider.addChangeListener(changeEvent -> {
+                int volume = volumeSlider.getValue();
+                updateVolume(volume);
+            });
+
+            // Create and show a dialog with the slider
+            JDialog volumeDialog = new JDialog();
+            volumeDialog.setTitle("Volume Control");
+            volumeDialog.add(volumeSlider);
+            volumeDialog.pack();
+            volumeDialog.setVisible(true);
+        });
+        
         //Create the help menu
         JMenu helpMenu = new JMenu("Help");
         JMenuItem helpItem = new JMenuItem("Help Center");
@@ -531,21 +555,29 @@ public class CalculatorUI extends JFrame {
     
     private boolean isMuted = false;
     private float savedVolume = 0.0f; // Default volume level
-    
+
+    // Convert a linear slider value (0-100) to a decibel value for the volume control
+    private float convertSliderValueToDecibels(int sliderValue) {
+        float minDecibels = -80.0f; // Minimum decibel level for silence
+        if (sliderValue == 0) {
+            return minDecibels;
+        }
+        return (float) (minDecibels * (1 - (sliderValue / 100.0)));
+    }
+
     private void playSound(String soundFileName) {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundFileName).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
 
+            // Get the gain control from the clip
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
             if (isMuted) {
-                // Mute the sound
-                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(gainControl.getMinimum());
+                gainControl.setValue(gainControl.getMinimum()); // Mute the sound
             } else {
-                // Set to saved volume
-                FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(savedVolume);
+                gainControl.setValue(savedVolume); // Set to the current saved volume
             }
 
             clip.start();
@@ -554,6 +586,12 @@ public class CalculatorUI extends JFrame {
             e.printStackTrace();
         }
     }
+
+    // Method to update volume based on slider value
+    public void updateVolume(int sliderValue) {
+        savedVolume = convertSliderValueToDecibels(sliderValue);
+    }
+
 
     // Method to mute the sound
     public void muteSound() {
