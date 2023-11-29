@@ -56,7 +56,7 @@ public class AboutPanel extends JPanel {
 				    </style>
 				</head>
 				<body>
-				    <p><strong>Version:</strong> 1.0.2</p>
+				    <p><strong>Version:</strong> 1.1.3</p>
 				    <p>Developed by Brendan LeGrand</p>
 				    <p>For more information, visit my <a href="https://github.com/BrendanoElTaco/CSCI3300_Term_Project">GitHub</a></p>
 				    <p>NumCruncher is a user-friendly calculator designed to perform basic arithmetic operations, trigonometric calculations, and more.</p>

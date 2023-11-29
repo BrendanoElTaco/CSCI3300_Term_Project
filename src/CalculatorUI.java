@@ -100,6 +100,9 @@ public class CalculatorUI extends JFrame {
         initializeOperationButtons();
         initializeFunctionButtons();
         initializeMenuBar();
+        
+        //Make key presses work
+        registerGlobalKeyEventListener();
 
         // Create the main panel to hold the result field and button panel
         mainPanel = new JPanel();
@@ -114,8 +117,6 @@ public class CalculatorUI extends JFrame {
         
         // Make the frame visible
         setVisible(true);
-        
-        registerGlobalKeyEventListener();
     }
     
     private void initializeMenuBar() {
@@ -129,7 +130,6 @@ public class CalculatorUI extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    
     private JMenu createCustomizationMenu() {
         JMenu customizationMenu = new JMenu("Customization");
 
@@ -205,7 +205,6 @@ public class CalculatorUI extends JFrame {
         return soundMenu;
     }
 
-    
     private JMenu createHelpMenu() {
         JMenu helpMenu = new JMenu("Help");
         JMenuItem helpItem = new JMenuItem("Help Center");
@@ -222,7 +221,6 @@ public class CalculatorUI extends JFrame {
         return helpMenu;
     }
 
-    
     private JMenu createAboutMenu() {
         JMenu aboutMenu = new JMenu("About");
         JMenuItem aboutItem = new JMenuItem("About my Calculator");
@@ -238,7 +236,6 @@ public class CalculatorUI extends JFrame {
 
         return aboutMenu;
     }
-
 
 	private void initializeResultField() {
         resultField = new JTextField(10);
@@ -274,7 +271,6 @@ public class CalculatorUI extends JFrame {
 	        });
 	    }
 	}
-
 
     private void initializeFunctionButtons() {
     	calculateButton = createButton("=", BUTTON_FONT);
@@ -584,7 +580,6 @@ public class CalculatorUI extends JFrame {
     public void updateVolume(int sliderValue) {
         savedVolume = convertSliderValueToDecibels(sliderValue);
     }
-
 
     // Method to mute the sound
     public void muteSound() {

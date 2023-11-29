@@ -17,7 +17,6 @@ public class Calculator extends JFrame implements ActionListener {
 	 * - Use the graphical interface for performing calculations.
 	 * - Refer to the FAQ in the help center for detailed operating instructions.
 	 *
-	 * Note: This class depends on CalculatorUI and CalculatorLogic for its operations.
 	 */
 	private static final long serialVersionUID = 4519143440307608770L;    
     
