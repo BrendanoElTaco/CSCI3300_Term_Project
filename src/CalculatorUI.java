@@ -1,8 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionListener;
 import java.awt.event.AWTEventListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -90,7 +88,7 @@ public class CalculatorUI extends JFrame {
 	//Initialize UI
     public void initializeUI(Calculator calc) {
         this.calculator = calc;
-        setTitle("NumCruncher - A scientific calculator");
+        setTitle("NumCruncher - A Scientific Calculator");
 		// Ensuring the application exits when the window is closed												   
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(450, 550);
@@ -121,20 +119,26 @@ public class CalculatorUI extends JFrame {
     }
     
     private void initializeMenuBar() {
-    	// Create the menu bar
         JMenuBar menuBar = new JMenuBar();
-        
-        // Create the "Customization" menu
-        JMenu customizationMenu = new JMenu("Customization");
-        menuBar.add(customizationMenu);
 
-        // Create radio button menu items
+        menuBar.add(createCustomizationMenu());
+        menuBar.add(createSoundMenu());
+        menuBar.add(createHelpMenu());
+        menuBar.add(createAboutMenu());
+
+        setJMenuBar(menuBar);
+    }
+
+    
+    private JMenu createCustomizationMenu() {
+        JMenu customizationMenu = new JMenu("Customization");
+
+        // Radio button menu items for light and dark mode
         JRadioButtonMenuItem lightMode = new JRadioButtonMenuItem("Light Mode");
         JRadioButtonMenuItem darkMode = new JRadioButtonMenuItem("Dark Mode");
-        
-        //Set light mode as default
-        lightMode.setSelected(true);
-        
+
+        lightMode.setSelected(true); // Set light mode as default
+
         // Group the radio buttons
         ButtonGroup group = new ButtonGroup();
         group.add(lightMode);
@@ -144,30 +148,27 @@ public class CalculatorUI extends JFrame {
         customizationMenu.add(lightMode);
         customizationMenu.add(darkMode);
 
-        // Action listeners
-        lightMode.addActionListener(e -> {
-        	setLightMode();
-        });
-        
-        darkMode.addActionListener(e -> {
-            setDarkMode();
-        });
-        
-        // Create the "Sound" menu
+        // Action listeners for mode changes
+        lightMode.addActionListener(e -> setLightMode());
+        darkMode.addActionListener(e -> setDarkMode());
+
+        return customizationMenu;
+    }
+
+    
+    private JMenu createSoundMenu() {
         JMenu soundMenu = new JMenu("Sound");
-        menuBar.add(soundMenu);
-        
-        // Add the "Volume Control" menu item to the "Sound" menu
+
+        // Menu item for volume control
         JMenuItem volumeControl = new JMenuItem("Volume Control");
         soundMenu.add(volumeControl);
 
-        // Create radio button menu items
+        // Radio button menu items for sound on/off
         JRadioButtonMenuItem soundOn = new JRadioButtonMenuItem("On");
         JRadioButtonMenuItem soundOff = new JRadioButtonMenuItem("Off");
-        
-        //Set sound on as default
-        soundOn.setSelected(true);
-        
+
+        soundOn.setSelected(true); // Set sound on as default
+
         // Group the radio buttons
         ButtonGroup soundGroup = new ButtonGroup();
         soundGroup.add(soundOn);
@@ -177,16 +178,11 @@ public class CalculatorUI extends JFrame {
         soundMenu.add(soundOn);
         soundMenu.add(soundOff);
 
-        // Action listeners
-        soundOn.addActionListener(e -> {
-        	unmuteSound();
-        });
-        
-        soundOff.addActionListener(e -> {
-            muteSound();
-        });
+        // Action listeners for sound settings
+        soundOn.addActionListener(e -> unmuteSound());
+        soundOff.addActionListener(e -> muteSound());
 
-        // Action listener to open the volume control
+        // Volume control action listener
         volumeControl.addActionListener(e -> {
             JSlider volumeSlider = new JSlider(JSlider.VERTICAL, 0, 100, 100); // min, max, initial value
             volumeSlider.setMajorTickSpacing(10);
@@ -205,49 +201,44 @@ public class CalculatorUI extends JFrame {
             volumeDialog.pack();
             volumeDialog.setVisible(true);
         });
-        
-        //Create the help menu
+
+        return soundMenu;
+    }
+
+    
+    private JMenu createHelpMenu() {
         JMenu helpMenu = new JMenu("Help");
         JMenuItem helpItem = new JMenuItem("Help Center");
-        menuBar.add(helpMenu);
-        
+
         helpMenu.add(helpItem);
-        menuBar.add(helpMenu);
-        this.setJMenuBar(menuBar);
-        
-        // Add ActionListener to the helpItem
-        helpItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Code to display HelpCenterPanel
-                HelpCenterPanel helpPanel = new HelpCenterPanel();
-                JOptionPane.showMessageDialog(null, helpPanel, "Help Center: Calculator Functionality", JOptionPane.INFORMATION_MESSAGE);
-            }
+
+        // Action listener for help item
+        helpItem.addActionListener(e -> {
+            // Code to display HelpCenterPanel
+            HelpCenterPanel helpPanel = new HelpCenterPanel();
+            JOptionPane.showMessageDialog(null, helpPanel, "Help Center: Calculator Functionality", JOptionPane.INFORMATION_MESSAGE);
         });
-        
-        //Create the about menu
+
+        return helpMenu;
+    }
+
+    
+    private JMenu createAboutMenu() {
         JMenu aboutMenu = new JMenu("About");
         JMenuItem aboutItem = new JMenuItem("About my Calculator");
-        menuBar.add(aboutMenu);
-        
+
         aboutMenu.add(aboutItem);
-        menuBar.add(aboutMenu);
-        this.setJMenuBar(menuBar);
-        
-        // Add ActionListener to the menuItem
-        aboutItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Code to display AboutPanel
-                AboutPanel aboutPanel = new AboutPanel();
-                JOptionPane.showMessageDialog(null, aboutPanel, "About NumCruncher", JOptionPane.INFORMATION_MESSAGE);
-            }
+
+        // Action listener for about item
+        aboutItem.addActionListener(e -> {
+            // Code to display AboutPanel
+            AboutPanel aboutPanel = new AboutPanel();
+            JOptionPane.showMessageDialog(null, aboutPanel, "About NumCruncher", JOptionPane.INFORMATION_MESSAGE);
         });
-        
-        // Add the menu bar to the frame
-        setJMenuBar(menuBar);
-		
-	}
+
+        return aboutMenu;
+    }
+
 
 	private void initializeResultField() {
         resultField = new JTextField(10);
