@@ -529,7 +529,6 @@ public class CalculatorUI extends JFrame {
                     case KeyEvent.VK_DIVIDE:
                         operationButtons[3].doClick();
                         break;
-                    // Additional keys from setupGlobalKeyBindings
                     case KeyEvent.VK_ENTER:
                         calculateButton.doClick();
                         break;
@@ -541,6 +540,9 @@ public class CalculatorUI extends JFrame {
                     	ke.consume();  // Stop windows error sound playing when pressed
                         ceButton.doClick();
                         break;
+                    case KeyEvent.VK_DECIMAL:
+                    	decimalButton.doClick();
+                    	break;
                 }
             }
         }

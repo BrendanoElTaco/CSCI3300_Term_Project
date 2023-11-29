@@ -50,17 +50,24 @@ public class CalculatorLogic {
         UI.getResultField().setText(currentInput);
     }
 
-    public void handleArithmeticOperator(String buttonText) {
+    public void handleOperatorButtons(String buttonText) {
         System.out.println("The " + buttonText + " key was pressed");
+
         if (!currentInput.isEmpty()) {
-            if (num1 == 0) {
-                num1 = Double.parseDouble(currentInput);
+            if (newInput || num1 == 0) {
+                num1 = Double.parseDouble(currentInput); // Store the first operand
+                newInput = false;
             } else {
-                // Store the second operand for later use
-                num2 = Double.parseDouble(currentInput);
+                num2 = Double.parseDouble(currentInput); // Store the second operand
+                num1 = performOperation(num1, num2, selectedOperation); // Perform the previous operation
+                UI.getResultField().setText(String.valueOf(num1)); // Update the UI with the result
             }
+            selectedOperation = buttonText; // Set the new operation
+            currentInput = ""; // Clear current input for the next number
+        } else if (!newInput) {
+            // If currentInput is empty but an operation was already in progress,
+            // change the operation without affecting num1.
             selectedOperation = buttonText;
-            currentInput = "";
         }
     }
 

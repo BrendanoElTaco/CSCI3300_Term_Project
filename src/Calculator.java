@@ -50,7 +50,7 @@ public class Calculator extends JFrame implements ActionListener {
 
 			// Handle actions for basic arithmetic operator buttons (+, -, ×, ÷)
 			else if ("+-×÷".contains(buttonText)) {
-				logic.handleArithmeticOperator(buttonText);
+				logic.handleOperatorButtons(buttonText);
 			}
 
 			// Handle the action for the equals button (=)
