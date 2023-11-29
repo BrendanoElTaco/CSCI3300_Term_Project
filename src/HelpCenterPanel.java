@@ -103,6 +103,7 @@ public class HelpCenterPanel extends JPanel {
         helpTextPane.setText(htmlContent);
     }
 	
+	//Dynamically change text size
 	private void adjustTextSize(JTextPane textPane) {
         // Get the current size of the JTextPane
         Dimension size = textPane.getSize();

@@ -51,19 +51,19 @@ public class CalculatorLogic {
     }
 
     public void handleArithmeticOperator(String buttonText) {
-    	System.out.println("The " + buttonText + " key was pressed");
-    	if (!currentInput.isEmpty()) {
-			if (num1 == 0) {
-				num1 = Double.parseDouble(currentInput);
-			} else {
-				num2 = Double.parseDouble(currentInput);
-				num1 = performOperation(num1, num2, selectedOperation);
-				UI.getResultField().setText(String.valueOf(num1));
-			}
-			currentInput = "";
-			selectedOperation = buttonText;
-		}
+        System.out.println("The " + buttonText + " key was pressed");
+        if (!currentInput.isEmpty()) {
+            if (num1 == 0) {
+                num1 = Double.parseDouble(currentInput);
+            } else {
+                // Store the second operand for later use
+                num2 = Double.parseDouble(currentInput);
+            }
+            selectedOperation = buttonText;
+            currentInput = "";
+        }
     }
+
     
     public void handleEqualsButton(String buttonText) {
     	System.out.println("The " + buttonText + " key was pressed");

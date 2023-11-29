@@ -64,13 +64,12 @@ public class AboutPanel extends JPanel {
 				    <p>If you find any bugs, please submit a bug report on <a href="https://github.com/BrendanoElTaco/CSCI3300_Term_Project">GitHub</a>.</p>
 				    <p>&nbsp;</p>
 				    <p><strong>Credits:</strong></p>
-				    <p>- Special thanks to Michael McLeod, MBT for teaching this class, and StackOverflow for saving my sanity.</p>
+				    <p>- Special thanks to <a href="https://ung.edu/human-resources/faculty-staff-bio/michael-mcleod.php">Michael McLeod, MBT</a> for teaching this class, and StackOverflow for saving my sanity.</p>
 				    <p>&nbsp;</p>
 				    <p><strong>Disclaimer:</strong></p> 
 				    <p>- NumCruncher is provided "as is" for educational purposes and is not intended for professional use.</p>
-<				</body>
-<<				/html>
-
+				</body>
+				</html>
         		""";
         aboutTextPane.setText(htmlString);
 

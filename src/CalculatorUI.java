@@ -63,8 +63,11 @@ public class CalculatorUI extends JFrame {
     
     private JPanel mainPanel;
     
+    //Stuff for sound methods
     private String[] soundFiles = {"sounds/key1.wav", "sounds/key2.wav", "sounds/key3.wav"};
-    private Random random = new Random();
+    private Random random = new Random();    
+    private boolean isMuted = false;
+    private float savedVolume = 0.0f; // Default volume level
 	
     //Fonts
     private final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
@@ -515,27 +518,27 @@ public class CalculatorUI extends JFrame {
                 // Check for operation key presses
                 switch (key) {
                     case KeyEvent.VK_ADD:
-                        operationButtons[0].doClick(); // Assuming '+' is at index 0
+                        operationButtons[0].doClick();
                         break;
                     case KeyEvent.VK_SUBTRACT:
-                        operationButtons[1].doClick(); // Assuming '-' is at index 1
+                        operationButtons[1].doClick();
                         break;
                     case KeyEvent.VK_MULTIPLY:
-                        operationButtons[2].doClick(); // Assuming '*' is at index 2
+                        operationButtons[2].doClick();
                         break;
                     case KeyEvent.VK_DIVIDE:
-                        operationButtons[3].doClick(); // Assuming '/' is at index 3
+                        operationButtons[3].doClick();
                         break;
                     // Additional keys from setupGlobalKeyBindings
                     case KeyEvent.VK_ENTER:
                         calculateButton.doClick();
                         break;
                     case KeyEvent.VK_BACK_SPACE:
-                    	ke.consume();  // Stop windows sound playing when pressed
+                    	ke.consume();  // Stop windows error sound playing when pressed
                         backspaceButton.doClick();
                         break;
                     case KeyEvent.VK_DELETE:
-                    	ke.consume();  // Stop windows sound playing when pressed
+                    	ke.consume();  // Stop windows error sound playing when pressed
                         ceButton.doClick();
                         break;
                 }
@@ -552,9 +555,6 @@ public class CalculatorUI extends JFrame {
         };
         Toolkit.getDefaultToolkit().addAWTEventListener(listener, AWTEvent.KEY_EVENT_MASK);
     }
-    
-    private boolean isMuted = false;
-    private float savedVolume = 0.0f; // Default volume level
 
     // Convert a linear slider value (0-100) to a decibel value for the volume control
     private float convertSliderValueToDecibels(int sliderValue) {
