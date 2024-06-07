@@ -70,7 +70,6 @@ public class CalculatorLogic {
             selectedOperation = buttonText;
         }
     }
-
     
     public void handleEqualsButton(String buttonText) {
     	System.out.println("The " + buttonText + " key was pressed");
@@ -393,36 +392,9 @@ public class CalculatorLogic {
 	}
 	
 	public void handleSecondaryFunctionButton(Object source) {
-		//Toggle between secondary functions
-		isSecondaryMode = !isSecondaryMode;
-		if (isSecondaryMode) {
-			UI.getSqrRootButton().setText("\u221b" + "x");
-			UI.getPowerOfTenButton().setText("2ˣ");
-			UI.getPowerOfButton().setText("n√x");
-			UI.getSinButton().setText("sin" + "\u207B" + "\u00B9" );
-			UI.getCosButton().setText("cos" + "\u207B" + "\u00B9" );
-			UI.getTanButton().setText("tan" + "\u207B" + "\u00B9" );
-			UI.getxPowerOf2Button().setText("x³");
-			UI.getSecButton().setText("sec" + "\u207B" + "\u00B9" );
-			UI.getCscButton().setText("csc" + "\u207B" + "\u00B9" );
-			UI.getCotButton().setText("cot" + "\u207B" + "\u00B9" );
-			UI.getLogBaseTenButton().setText("log" + "\u2099" + "x");
-			UI.logBaseEButton.setText("eˣ");
-		} else {
-			UI.getSqrRootButton().setText("√x");
-			UI.getPowerOfButton().setText("xⁿ");
-			UI.getPowerOfTenButton().setText("10ˣ");					
-			UI.getSinButton().setText("sin");
-			UI.getCosButton().setText("cos");
-			UI.getTanButton().setText("tan");
-			UI.getxPowerOf2Button().setText("x²");
-			UI.getSecButton().setText("sec");
-			UI.getCscButton().setText("csc");
-			UI.getCotButton().setText("cot");
-			UI.getLogBaseTenButton().setText("log" + "\u2081" + "\u2080");
-			UI.getLogBaseEButton().setText("LN");
-		}
-	}
+        isSecondaryMode = !isSecondaryMode;
+        UI.updateSecondaryFunctionLabels(isSecondaryMode);
+    }
 	
 	//Method that preforms a operation with 2 input integers
 	public double performOperation(double num1, double num2, String operation) {

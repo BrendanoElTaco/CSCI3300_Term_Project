@@ -543,6 +543,36 @@ public class CalculatorUI extends JFrame {
             }
         }
     }
+    
+    public void updateSecondaryFunctionLabels(boolean isSecondaryMode) {
+        if (isSecondaryMode) {
+            getSqrRootButton().setText("\u221b" + "x");
+            getPowerOfTenButton().setText("2ˣ");
+            getPowerOfButton().setText("n√x");
+            getSinButton().setText("sin" + "\u207B" + "\u00B9");
+            getCosButton().setText("cos" + "\u207B" + "\u00B9");
+            getTanButton().setText("tan" + "\u207B" + "\u00B9");
+            getxPowerOf2Button().setText("x³");
+            getSecButton().setText("sec" + "\u207B" + "\u00B9");
+            getCscButton().setText("csc" + "\u207B" + "\u00B9");
+            getCotButton().setText("cot" + "\u207B" + "\u00B9");
+            getLogBaseTenButton().setText("log" + "\u2099" + "x");
+            logBaseEButton.setText("eˣ");
+        } else {
+            getSqrRootButton().setText("√x");
+            getPowerOfButton().setText("xⁿ");
+            getPowerOfTenButton().setText("10ˣ");                    
+            getSinButton().setText("sin");
+            getCosButton().setText("cos");
+            getTanButton().setText("tan");
+            getxPowerOf2Button().setText("x²");
+            getSecButton().setText("sec");
+            getCscButton().setText("csc");
+            getCotButton().setText("cot");
+            getLogBaseTenButton().setText("log" + "\u2081" + "\u2080");
+            getLogBaseEButton().setText("LN");
+        }
+    }
 
     // Method to register the global event listener
     public void registerGlobalKeyEventListener() {
