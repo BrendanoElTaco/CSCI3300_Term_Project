@@ -82,6 +82,9 @@ public class CalculatorUI extends JFrame {
     Color darkNumberBgColor = Color.decode("#3b3b3b");
     Color darkButtonBgColor = Color.decode("#323232");
     Color darkTextColor = Color.decode("#e1e1e1");
+    
+    // Flag to manage the state of key listeners
+    private boolean areKeyListenersEnabled = true;
         
 	private Calculator calculator;
 
@@ -485,6 +488,12 @@ public class CalculatorUI extends JFrame {
 
 	// Global method to handle key events
     private void handleGlobalKeyEvents(AWTEvent event) {
+    	// if listeners are disabled for a dialog input
+    	if (!areKeyListenersEnabled) {
+    		return;
+    	}
+    	
+    	// When key is pressed get its ID
         if (event instanceof KeyEvent) {
             KeyEvent ke = (KeyEvent) event;
             if (ke.getID() == KeyEvent.KEY_PRESSED) {
@@ -589,6 +598,16 @@ public class CalculatorUI extends JFrame {
     // Method to unmute the sound
     public void unmuteSound() {
         isMuted = false;
+    }
+    
+    // Method to disable key listeners
+    public void disableKeyListeners() {
+        areKeyListenersEnabled = false;
+    }
+
+    // Method to enable key listeners
+    public void enableKeyListeners() {
+        areKeyListenersEnabled = true;
     }
     
     //Getters

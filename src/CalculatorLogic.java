@@ -241,32 +241,48 @@ public class CalculatorLogic {
     }
     
     public void handleLogBaseTenButton(Object source) {
-    	double num = Double.parseDouble(currentInput);
-		double result = 0.0;
-		//Secondary Mode log_y x
-		if (isSecondaryMode) {
-	        // Prompt the user for the base (y) using input dialog
-	        String baseInput = JOptionPane.showInputDialog(this, "Enter the base (y) for the logarithm:");
-	        
-	        if (baseInput != null && !baseInput.isEmpty()) {
-	            double base = Double.parseDouble(baseInput);
-	            
-	            if (base <= 0 || base == 1) {
-	                JOptionPane.showMessageDialog(calculator, "Invalid base (y) for logarithm", "Error", JOptionPane.ERROR_MESSAGE);
-	            } else {
-	                // Calculate the logarithm (log base y of x)
-	                result = Math.log(num) / Math.log(base);
-	                UI.getResultField().setText(String.valueOf(result));
-	                currentInput = "";
-	                newInput = true;
-	            }
-	        }
-		} else {
-			result = Math.log10(num);
-			UI.getResultField().setText(String.valueOf(result));
-			currentInput = "";
-			newInput = true;	
-		}
+        // Disable key listeners before showing the dialog
+        UI.disableKeyListeners();
+        
+        try {
+            double num = Double.parseDouble(currentInput);
+            if (num <= 0) {
+                JOptionPane.showMessageDialog(calculator, "Invalid input (X) for logarithm. X must be greater than 0.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            double result = 0.0;
+            
+            // Secondary Mode log_y x
+            if (isSecondaryMode) {
+                // Prompt the user for the base (y) using input dialog
+                String baseInput = JOptionPane.showInputDialog(this, "Enter the base (y) for the logarithm:");
+                
+                if (baseInput != null && !baseInput.isEmpty()) {
+                    double base = Double.parseDouble(baseInput);
+                    
+                    if (base <= 0 || base == 1) {
+                        JOptionPane.showMessageDialog(calculator, "Invalid base (y) for logarithm. Base must be greater than 0 and not equal to 1.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        // Calculate the logarithm (log base y of x)
+                        result = Math.log(num) / Math.log(base);
+                        UI.getResultField().setText(String.valueOf(result));
+                        currentInput = "";
+                        newInput = true;
+                    }
+                }
+            } else {
+                result = Math.log10(num);
+                UI.getResultField().setText(String.valueOf(result));
+                currentInput = "";
+                newInput = true;    
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(calculator, "Invalid input. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Re-enable key listeners after the dialog is closed
+            UI.enableKeyListeners();
+        }
     }
     
     public void handleLogBaseEButton(Object source) {
